@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StayEase - From Station to Stay</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>StayEase</h1>
+    <p>From Station to Stay 🏨</p>
+    <input type="text" id="cityFilter" placeholder="Search city..." onkeyup="filterPGs()" />
+  </header>
+  <main id="pg-list">
+    <div class="pg-card" data-city="Pune">
+      <h2>Shree Hostel, Pune</h2>
+      <p>📍 Near Shivaji Nagar Station</p>
+      <p>📞 9876543210</p>
+      <a href="https://maps.google.com/?q=Shree+Hostel+Pune" target="_blank">Open in Maps</a>
+    </div>
+    <div class="pg-card" data-city="Delhi">
+      <h2>Sai PG, Delhi</h2>
+      <p>📍 Karol Bagh</p>
+      <p>📞 9876501234</p>
+      <a href="https://maps.google.com/?q=Sai+PG+Delhi" target="_blank">Open in Maps</a>
+    </div>
+    <div class="pg-card" data-city="Mumbai">
+      <h2>Comfort Stay, Mumbai</h2>
+      <p>📍 Dadar East</p>
+      <p>📞 9999911111</p>
+      <a href="https://maps.google.com/?q=Comfort+Stay+Mumbai" target="_blank">Open in Maps</a>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
