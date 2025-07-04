@@ -1,2 +1,0 @@
-# stayease
-StayEase official website
