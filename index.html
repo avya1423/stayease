@@ -6,16 +6,20 @@
 </head>
 <body>
 
-<h1>🏠 StayEase</h1>
-<p>Find your perfect PG easily</p>
+<header>
+  <h1>🏠 StayEase</h1>
+  <p>Find Best PGs Near You</p>
+</header>
 
-<input type="text" id="search" placeholder="Search PG in Bhopal..." />
-<button onclick="searchPG()">Search</button>
+<div class="search-box">
+  <input type="text" id="search" placeholder="Search city (Bhopal, Pune...)" />
+  <button onclick="searchPG()">Search</button>
+</div>
 
-<div id="results"></div>
+<div id="results" class="grid"></div>
+
+</body>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
-
-</body>
 </html>
