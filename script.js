@@ -56,3 +56,13 @@ function sendMessage() {
 
   document.getElementById("chatInput").value = "";
 }
+function filterPG() {
+  let value = document.getElementById("priceFilter").value;
+
+  let filtered = finalData.filter(pg => {
+    let price = parseInt(pg.price.replace(/[^\d]/g, ""));
+    return value === "" || price <= value;
+  });
+
+  displayPG(filtered);
+}
