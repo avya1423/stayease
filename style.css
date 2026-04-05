@@ -134,3 +134,29 @@ header {
   from {transform: scale(0.5);}
   to {transform: scale(1);}
 }
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e90ff;
+  color: white;
+  padding: 15px 20px;
+}
+
+.navbar a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+/* FILTER */
+.filters {
+  text-align: center;
+  margin: 10px;
+}
+
+.filters select {
+  padding: 10px;
+  border-radius: 8px;
+}
