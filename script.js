@@ -1,3 +1,5 @@
+let pgData = JSON.parse(localStorage.getItem("pgData")) || [];
+
 function searchPG() {
   let input = document.getElementById("search").value.toLowerCase();
   let resultsDiv = document.getElementById("results");
@@ -29,6 +31,34 @@ function searchPG() {
   });
 }
 
-function chat() {
-  alert("Try searching: PG in Bhopal under ₹5000 😊");
+// 💬 CHAT TOGGLE
+function toggleChat() {
+  let chat = document.getElementById("chatbox");
+  chat.style.display = chat.style.display === "none" ? "block" : "none";
+}
+
+// 🤖 CHATBOT
+function sendMessage() {
+  let input = document.getElementById("chatInput").value;
+  let chat = document.getElementById("chatMessages");
+
+  chat.innerHTML += `<p><b>You:</b> ${input}</p>`;
+
+  let reply = "Try searching PG in Bhopal 😊";
+
+  if (input.toLowerCase().includes("bhopal")) {
+    reply = "Showing PGs in Bhopal 👇";
+    document.getElementById("search").value = "Bhopal";
+    searchPG();
+  }
+
+  if (input.toLowerCase().includes("pune")) {
+    reply = "Showing PGs in Pune 👇";
+    document.getElementById("search").value = "Pune";
+    searchPG();
+  }
+
+  chat.innerHTML += `<p><b>Bot:</b> ${reply}</p>`;
+
+  document.getElementById("chatInput").value = "";
 }
