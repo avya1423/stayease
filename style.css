@@ -6,13 +6,13 @@ body {
 
 /* HEADER */
 header {
-  background: linear-gradient(135deg, #1e90ff, #00c853);
+  background: linear-gradient(135deg, #00c853, #1e90ff);
   color: white;
   text-align: center;
   padding: 40px 20px;
 }
 
-/* SEARCH BIG */
+/* SEARCH */
 .search-section {
   display: flex;
   justify-content: center;
