@@ -1,12 +1,10 @@
 let pgDataLocal = JSON.parse(localStorage.getItem("pgData")) || [];
 let finalData = [...pgData, ...pgDataLocal];
 
-// AUTO LOAD
 window.onload = function() {
   displayPG(finalData);
 };
 
-// DISPLAY
 function displayPG(data) {
   let resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
@@ -27,7 +25,6 @@ function displayPG(data) {
   });
 }
 
-// SEARCH
 function searchPG() {
   let input = document.getElementById("search").value.toLowerCase();
 
@@ -38,7 +35,6 @@ function searchPG() {
   displayPG(filtered);
 }
 
-// CHAT
 function toggleChat() {
   let chat = document.getElementById("chatbox");
   chat.style.display = chat.style.display === "none" ? "block" : "none";
