@@ -34,29 +34,11 @@ const pgData = [
     contact: "9012345678",
     image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb"
   },
-
-  // 🔥 TERA REAL ENTRY (IMAGE WAALI)
   {
     name: "Shri Ram Boys Hostel & Guest House",
     city: "Bhopal",
     price: "₹5000 (Approx)",
     contact: "8123869239",
     image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
-  },
-
-  // EXTRA CITY (GROWTH START)
-  {
-    name: "Girls Comfort PG",
-    city: "Pune",
-    price: "₹8000",
-    contact: "8877665544",
-    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267"
-  },
-  {
-    name: "Pune City Hostel",
-    city: "Pune",
-    price: "₹7000",
-    contact: "7766554433",
-    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
   }
 ];
