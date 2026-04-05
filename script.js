@@ -17,9 +17,9 @@ function searchPG() {
     resultsDiv.innerHTML += `
       <div class="card">
         <h3>${pg.name}</h3>
-        <p>City: ${pg.city}</p>
-        <p>Price: ${pg.price}</p>
-        <p>Contact: ${pg.contact}</p>
+        <p>📍 ${pg.city}</p>
+        <p>💰 ${pg.price}</p>
+        <p>📞 ${pg.contact}</p>
       </div>
     `;
   });
