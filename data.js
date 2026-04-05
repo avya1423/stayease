@@ -40,12 +40,5 @@ const pgData = [
     price: "₹5000 (Approx)",
     contact: "8123869239",
     image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
-  },
-  {
-    name: "Girls Comfort PG",
-    city: "Pune",
-    price: "₹8000",
-    contact: "8877665544",
-    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267"
   }
 ];
