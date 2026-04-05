@@ -1,5 +1,21 @@
-let pgData = JSON.parse(localStorage.getItem("pgData")) || [];
+let pgData = JSON.parse(localStorage.getItem("pgData")) || [
+  {
+    name: "Sharma PG",
+    city: "Bhopal",
+    price: "₹5000",
+    contact: "9876543210",
+    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+  },
+  {
+    name: "Shri Ram Boys Hostel & Guest House",
+    city: "Bhopal",
+    price: "₹5000 (Approx)",
+    contact: "8123869239",
+    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+  }
+];
 
+// 🔍 SEARCH
 function searchPG() {
   let input = document.getElementById("search").value.toLowerCase();
   let resultsDiv = document.getElementById("results");
@@ -44,18 +60,12 @@ function sendMessage() {
 
   chat.innerHTML += `<p><b>You:</b> ${input}</p>`;
 
-  let reply = "Try searching PG in Bhopal 😊";
+  let reply = "Try PG in Bhopal 😊";
 
   if (input.toLowerCase().includes("bhopal")) {
-    reply = "Showing PGs in Bhopal 👇";
     document.getElementById("search").value = "Bhopal";
     searchPG();
-  }
-
-  if (input.toLowerCase().includes("pune")) {
-    reply = "Showing PGs in Pune 👇";
-    document.getElementById("search").value = "Pune";
-    searchPG();
+    reply = "Showing PGs in Bhopal 👇";
   }
 
   chat.innerHTML += `<p><b>Bot:</b> ${reply}</p>`;
