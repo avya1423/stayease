@@ -9,7 +9,25 @@ header {
   background: linear-gradient(135deg, #00c853, #1e90ff);
   color: white;
   text-align: center;
-  padding: 40px 20px;
+  padding: 100px 20px;
+}
+
+/* LOGO IMAGE */
+.logo-img {
+  width: 120px;
+  animation: zoomIn 1s ease;
+}
+
+/* TITLE BIG */
+.title {
+  font-size: 50px;
+  margin: 10px 0;
+  animation: fadeInDown 1s ease;
+}
+
+/* TAGLINE */
+.tagline {
+  font-size: 18px;
 }
 
 /* SEARCH */
@@ -17,24 +35,23 @@ header {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 30px;
+  margin-top: -50px;
 }
 
 .search-section input {
-  padding: 15px;
-  width: 320px;
-  font-size: 16px;
+  padding: 18px;
+  width: 350px;
+  font-size: 18px;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
 
 .search-section button {
-  padding: 15px 25px;
+  padding: 18px 25px;
   background: #00c853;
   color: white;
   border: none;
   border-radius: 10px;
-  cursor: pointer;
 }
 
 /* GRID */
@@ -42,7 +59,7 @@ header {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
-  padding: 20px;
+  padding: 40px;
 }
 
 /* CARD */
@@ -51,7 +68,6 @@ header {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  transition: 0.3s;
   animation: fadeIn 0.5s ease;
 }
 
@@ -71,7 +87,6 @@ header {
 
 .card p {
   margin: 5px 10px;
-  color: #555;
 }
 
 .card a {
@@ -102,17 +117,20 @@ header {
   background: white;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-#chatMessages {
-  height: 150px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
-
-/* ANIMATION */
+/* ANIMATIONS */
 @keyframes fadeIn {
-  from {opacity: 0; transform: translateY(10px);}
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeInDown {
+  from {opacity: 0; transform: translateY(-20px);}
   to {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes zoomIn {
+  from {transform: scale(0.5);}
+  to {transform: scale(1);}
 }
