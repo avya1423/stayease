@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
   <title>StayEase - Find PG</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header>
   <h1>🏠 StayEase</h1>
-  <p>Find Best PGs Near You</p>
+  <p>Find Best PGs & Hostels Near You</p>
 </header>
 
-<div class="search-box">
+<section class="search-section">
   <input type="text" id="search" placeholder="Search city (Bhopal, Pune...)" />
   <button onclick="searchPG()">Search</button>
-</div>
+</section>
 
-<div id="results" class="grid"></div>
+<section id="results" class="grid"></section>
 
-</body>
+<div class="chat-btn" onclick="chat()">💬</div>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
+
+</body>
 </html>
