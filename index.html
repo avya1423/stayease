@@ -3,6 +3,7 @@
 <head>
   <title>StayEase - Find PG</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,18 +14,19 @@
   <p>Find Best PGs & Hostels Near You</p>
 </header>
 
+<!-- 🔍 BIG SEARCH -->
 <section class="search-section">
   <input type="text" id="search" placeholder="Search city (Bhopal, Pune...)" />
   <button onclick="searchPG()">Search</button>
 </section>
 
+<!-- RESULTS -->
 <section id="results" class="grid"></section>
 
-<!-- 💬 CHAT BUTTON -->
+<!-- 💬 CHAT -->
 <div class="chat-btn" onclick="toggleChat()">💬</div>
 
-<!-- 🤖 CHATBOX -->
-<div id="chatbox" class="chatbox" style="display:none;">
+<div id="chatbox" class="chatbox">
   <div id="chatMessages"></div>
   <input type="text" id="chatInput" placeholder="Ask something..." />
   <button onclick="sendMessage()">Send</button>
