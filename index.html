@@ -2,9 +2,7 @@
 <html>
 <head>
   <title>StayEase - Find PG</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -22,7 +20,15 @@
 
 <section id="results" class="grid"></section>
 
-<div class="chat-btn" onclick="chat()">💬</div>
+<!-- 💬 CHAT BUTTON -->
+<div class="chat-btn" onclick="toggleChat()">💬</div>
+
+<!-- 🤖 CHATBOX -->
+<div id="chatbox" class="chatbox" style="display:none;">
+  <div id="chatMessages"></div>
+  <input type="text" id="chatInput" placeholder="Ask something..." />
+  <button onclick="sendMessage()">Send</button>
+</div>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
