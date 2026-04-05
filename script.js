@@ -1,12 +1,12 @@
 let pgDataLocal = JSON.parse(localStorage.getItem("pgData")) || [];
 let finalData = [...pgData, ...pgDataLocal];
 
-// AUTO LOAD (IMPORTANT 🔥)
+// AUTO LOAD
 window.onload = function() {
   displayPG(finalData);
 };
 
-// DISPLAY FUNCTION
+// DISPLAY
 function displayPG(data) {
   let resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
