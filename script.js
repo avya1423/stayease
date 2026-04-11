@@ -1,24 +1,21 @@
-let pgDataLocal = JSON.parse(localStorage.getItem("pgData")) || [];
-let finalData = [...pgData, ...pgDataLocal];
+let finalData = pgData;
 
-window.onload = function() {
-  displayPG(finalData);
-};
+window.onload = () => displayPG(finalData);
 
 function displayPG(data) {
-  let resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "";
+  let results = document.getElementById("results");
+  results.innerHTML = "";
 
   data.forEach(pg => {
-    resultsDiv.innerHTML += `
+    results.innerHTML += `
       <div class="card">
-        <img src="${pg.image}" />
+        <img src="${pg.image}">
         <h3>${pg.name}</h3>
         <p>📍 ${pg.city}</p>
         <p>💰 ${pg.price}</p>
         <p>📞 ${pg.contact}</p>
-        <a href="https://www.google.com/maps/search/${pg.name}" target="_blank">
-          📍 View Location
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${pg.name}" target="_blank">
+          📍 Navigate
         </a>
       </div>
     `;
@@ -35,6 +32,11 @@ function searchPG() {
   displayPG(filtered);
 }
 
+function nearMe() {
+  alert("Opening nearby PGs 📍");
+  window.open("https://www.google.com/maps/search/pg+near+me");
+}
+
 function toggleChat() {
   let chat = document.getElementById("chatbox");
   chat.style.display = chat.style.display === "none" ? "block" : "none";
@@ -44,25 +46,11 @@ function sendMessage() {
   let input = document.getElementById("chatInput").value;
   let chat = document.getElementById("chatMessages");
 
-  chat.innerHTML += `<p><b>You:</b> ${input}</p>`;
+  chat.innerHTML += `<p>You: ${input}</p>`;
 
-  if (input.toLowerCase().includes("bhopal")) {
-    document.getElementById("search").value = "Bhopal";
+  if(input.toLowerCase().includes("bhopal")){
+    document.getElementById("search").value="Bhopal";
     searchPG();
-    chat.innerHTML += `<p><b>Bot:</b> Showing PGs in Bhopal 👇</p>`;
-  } else {
-    chat.innerHTML += `<p><b>Bot:</b> Try searching Bhopal 😊</p>`;
+    chat.innerHTML += `<p>Bot: Showing PG in Bhopal 👇</p>`;
   }
-
-  document.getElementById("chatInput").value = "";
-}
-function filterPG() {
-  let value = document.getElementById("priceFilter").value;
-
-  let filtered = finalData.filter(pg => {
-    let price = parseInt(pg.price.replace(/[^\d]/g, ""));
-    return value === "" || price <= value;
-  });
-
-  displayPG(filtered);
 }
