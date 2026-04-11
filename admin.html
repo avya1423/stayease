@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel - StayEase</title>
+<title>Admin Panel</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
-<body>
 
-<h2>Add PG</h2>
+<body class="center">
 
-<input id="name" placeholder="PG Name"><br><br>
-<input id="city" placeholder="City"><br><br>
-<input id="price" placeholder="Price"><br><br>
-<input id="contact" placeholder="Contact"><br><br>
-<input id="image" placeholder="Image URL"><br><br>
+<div class="box">
+  <h2>Add PG 🏠</h2>
 
-<button onclick="addPG()">Add PG</button>
+  <input id="name" placeholder="PG Name">
+  <input id="city" placeholder="City">
+  <input id="price" placeholder="Price">
+  <input id="contact" placeholder="Contact">
+
+  <button onclick="addPG()">Add PG</button>
+</div>
+
+<script src="firebase.js"></script>
 
 <script>
-function addPG() {
-  let pg = {
-    name: document.getElementById("name").value,
-    city: document.getElementById("city").value,
-    price: document.getElementById("price").value,
-    contact: document.getElementById("contact").value,
-    image: document.getElementById("image").value
-  };
-
-  let data = JSON.parse(localStorage.getItem("pgData")) || [];
-  data.push(pg);
-
-  localStorage.setItem("pgData", JSON.stringify(data));
-
-  alert("PG Added Successfully ✅");
+function addPG(){
+  db.collection("pgs").add({
+    name:name.value,
+    city:city.value,
+    price:price.value,
+    contact:contact.value
+  }).then(()=>{
+    alert("PG Added ✅");
+  });
 }
 </script>
 
