@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #2c5364);
   color: white;
 }
 
@@ -10,13 +10,12 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
 }
 
-.navbar a {
-  color: white;
-  text-decoration: none;
+/* UNIQUE LOGO TEXT */
+.logo-text {
+  font-family: 'Orbitron', sans-serif;
+  color: #00ffcc;
 }
 
 /* HERO */
@@ -25,19 +24,22 @@ body {
   margin-top: 80px;
 }
 
-.hero h1 {
-  font-size: 42px;
+/* BIG UNIQUE TITLE */
+.main-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 60px;
+  color: #00ffcc;
+  letter-spacing: 3px;
+  animation: glow 2s infinite alternate;
 }
 
-.hero p {
+/* TAGLINE */
+.tagline {
+  font-size: 18px;
   opacity: 0.8;
 }
 
 /* SEARCH */
-.search-box {
-  margin-top: 20px;
-}
-
 .search-box input {
   padding: 15px;
   width: 280px;
@@ -47,9 +49,17 @@ body {
 
 .search-box button {
   padding: 15px;
+  background: #00ffcc;
   border: none;
-  background: #00c853;
-  color: white;
+  border-radius: 10px;
+}
+
+/* NEAR BUTTON */
+.near-btn {
+  margin-top: 10px;
+  padding: 12px;
+  background: #ff9800;
+  border: none;
   border-radius: 10px;
 }
 
@@ -64,9 +74,8 @@ body {
 /* CARD */
 .card {
   background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
   padding: 10px;
+  border-radius: 15px;
   transition: 0.3s;
 }
 
@@ -77,4 +86,30 @@ body {
 .card img {
   width: 100%;
   border-radius: 10px;
+}
+
+/* CHAT */
+.chat-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #00ffcc;
+  padding: 15px;
+  border-radius: 50%;
+}
+
+.chatbox {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* ANIMATION */
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00ffcc; }
+  to { text-shadow: 0 0 30px #00ffcc; }
 }
