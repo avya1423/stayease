@@ -4,7 +4,6 @@ body{
   background:#eef2f7;
 }
 
-/* NAVBAR */
 .navbar{
   background:linear-gradient(135deg,#4facfe,#00f2fe);
   color:white;
@@ -13,13 +12,11 @@ body{
   justify-content:space-between;
 }
 
-/* HERO */
 .hero{
   text-align:center;
   padding:20px;
 }
 
-/* SEARCH */
 .search{
   text-align:center;
   margin:20px;
@@ -37,20 +34,19 @@ body{
   border:none;
 }
 
-/* CARD */
 .card{
   background:white;
   margin:15px;
   padding:15px;
-  border-radius:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  border-radius:10px;
 }
 
-/* BUTTONS */
-.btns button{
-  margin:5px;
-  padding:8px;
-  border:none;
-  border-radius:6px;
-  background:#ddd;
+.loginBox{
+  position:fixed;
+  top:30%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  padding:20px;
+  display:none;
 }
