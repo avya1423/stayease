@@ -1,102 +1,84 @@
-// 🔐 LOGIN POPUP
 function openLogin(){
-  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("loginBox").style.display="block";
 }
 
-// 🔥 LOGIN
 function login(){
-  firebase.auth().signInWithEmailAndPassword(
-    email.value, password.value
-  ).then(()=>{
-    alert("Login success ✅");
-    document.getElementById("loginBox").style.display = "none";
-  }).catch(e=>alert(e.message));
-}
-
-// 🔥 SIGNUP
-function signup(){
-  firebase.auth().createUserWithEmailAndPassword(
-    email.value, password.value
-  ).then(()=>alert("Account created ✅"))
+  firebase.auth().signInWithEmailAndPassword(email.value,password.value)
+  .then(()=>{
+    alert("Login success");
+    document.getElementById("loginBox").style.display="none";
+  })
   .catch(e=>alert(e.message));
 }
 
-// 🔓 LOGOUT
-function logout(){
-  firebase.auth().signOut();
-  alert("Logged out");
+function signup(){
+  firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
+  .then(()=>alert("Account created"))
+  .catch(e=>alert(e.message));
 }
 
-// 🔥 LOAD DATA (NO LOGIN REQUIRED)
-db.collection("pgs").onSnapshot(snapshot => {
+function logout(){
+  firebase.auth().signOut();
+}
 
-  let html = "";
+// 🔥 LIVE DATA
+db.collection("pgs").onSnapshot(snapshot=>{
+  let html="";
 
-  snapshot.forEach(doc => {
-    let pg = doc.data();
+  snapshot.forEach(doc=>{
+    let pg=doc.data();
 
-    html += `
+    html+=`
     <div class="card">
       <h3>${pg.name}</h3>
-      <p>📍 ${pg.city}</p>
-      <p>💰 ${pg.price}</p>
+      <p>${pg.city}</p>
+      <p>${pg.price}</p>
 
-      <div class="btns">
-        <button onclick="save('${pg.name}')">❤️ Save</button>
-        <button onclick="book('${pg.name}')">📅 Book</button>
+      <button onclick="save('${pg.name}')">❤️</button>
+      <button onclick="book('${pg.name}')">📅</button>
 
-        <a href="tel:${pg.contact}">
-          <button>📞 Call</button>
-        </a>
-
-        <a href="https://www.google.com/maps/dir/?api=1&destination=${pg.name}" target="_blank">
-          <button>📍 Route</button>
-        </a>
-      </div>
-    </div>
-    `;
+      <a href="tel:${pg.contact}">
+        <button>📞</button>
+      </a>
+    </div>`;
   });
 
-  document.getElementById("results").innerHTML = html;
+  document.getElementById("results").innerHTML=html;
 });
 
-// 🔍 SEARCH
 function searchPG(){
-  let val = document.getElementById("search").value.toLowerCase();
+  let val=search.value.toLowerCase();
 
-  db.collection("pgs").get().then(snapshot => {
-    let html = "";
+  db.collection("pgs").get().then(snapshot=>{
+    let html="";
 
-    snapshot.forEach(doc => {
-      let pg = doc.data();
+    snapshot.forEach(doc=>{
+      let pg=doc.data();
 
       if(pg.city.toLowerCase().includes(val)){
-        html += `<div class="card">
-          <h3>${pg.name}</h3>
-          <p>${pg.city}</p>
-          <p>${pg.price}</p>
+        html+=`<div class="card">
+        <h3>${pg.name}</h3>
+        <p>${pg.city}</p>
         </div>`;
       }
     });
 
-    document.getElementById("results").innerHTML = html;
+    document.getElementById("results").innerHTML=html;
   });
 }
 
-// ❤️ SAVE (LOGIN REQUIRED)
-function save(name){
+function save(n){
   if(!firebase.auth().currentUser){
-    alert("Login required 🔐");
+    alert("Login required");
     return;
   }
-  alert(name + " saved ❤️");
+  alert("Saved "+n);
 }
 
-// 📅 BOOK (LOGIN REQUIRED)
-function book(name){
+function book(n){
   if(!firebase.auth().currentUser){
-    alert("Login required 🔐");
+    alert("Login required");
     return;
   }
-  alert("Booked " + name + " ✅");
+  alert("Booked "+n);
 }
