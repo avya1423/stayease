@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin Panel</title>
+<title>Admin</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -12,14 +12,14 @@
 <body class="center">
 
 <div class="box">
-  <h2>Add PG 🏠</h2>
+<h2>Add PG</h2>
 
-  <input id="name" placeholder="PG Name">
-  <input id="city" placeholder="City">
-  <input id="price" placeholder="Price">
-  <input id="contact" placeholder="Contact">
+<input id="name" placeholder="Name">
+<input id="city" placeholder="City">
+<input id="price" placeholder="Price">
+<input id="contact" placeholder="Contact">
 
-  <button onclick="addPG()">Add PG</button>
+<button onclick="addPG()">Add</button>
 </div>
 
 <script src="firebase.js"></script>
@@ -31,9 +31,7 @@ function addPG(){
     city:city.value,
     price:price.value,
     contact:contact.value
-  }).then(()=>{
-    alert("PG Added ✅");
-  });
+  }).then(()=>alert("Added"));
 }
 </script>
 
