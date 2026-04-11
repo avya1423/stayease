@@ -1,117 +1,70 @@
-// 👤 USER LOGIN
-let user = localStorage.getItem("user") || "";
+// 🔥 LOAD DATA REAL TIME
+db.collection("pgs").onSnapshot(snapshot => {
 
-// 🔐 SHOW LOGIN BOX
-function showLogin() {
-  document.getElementById("loginBox").style.display = "block";
-}
+  let html = "";
 
-// LOGIN
-function login() {
-  let u = document.getElementById("user").value;
-  localStorage.setItem("user", u);
-  alert("Welcome " + u + " 👋");
-  location.reload();
-}
+  snapshot.forEach(doc => {
+    let pg = doc.data();
 
-// ❤️ ADD TO FAVOURITE
-function addFav(name) {
-  let fav = JSON.parse(localStorage.getItem("fav")) || [];
-  fav.push(name);
-  localStorage.setItem("fav", JSON.stringify(fav));
-  alert("Added to Favourite ❤️");
-}
+    html += `
+    <div class="card">
+      <h3>${pg.name}</h3>
+      <p>📍 ${pg.city}</p>
+      <p>💰 ${pg.price}</p>
 
-// 📅 BOOK PG
-function bookPG(name) {
-  let booking = JSON.parse(localStorage.getItem("booking")) || [];
-  booking.push(name);
-  localStorage.setItem("booking", JSON.stringify(booking));
-  alert("Booking Done ✅");
-}
+      <div class="btns">
+        <button onclick="save('${pg.name}')">❤️ Save</button>
+        <button onclick="book('${pg.name}')">📅 Book</button>
 
-// 📊 MAIN DATA
-let finalData = pgData;
+        <a href="tel:${pg.contact}">
+          <button>📞 Call</button>
+        </a>
 
-// 🔄 AUTO LOAD
-window.onload = () => displayPG(finalData);
-
-// 🏠 DISPLAY PG
-function displayPG(data) {
-  let results = document.getElementById("results");
-  results.innerHTML = "";
-
-  data.forEach((pg, index) => {
-
-    let reviews = JSON.parse(localStorage.getItem("reviews" + index)) || [];
-
-    let reviewHTML = reviews.map(r => `<div class="review">⭐ ${r}</div>`).join("");
-
-    results.innerHTML += `
-      <div class="card">
-        <img src="${pg.image}">
-        
-        <div class="content">
-          <h3>${pg.name} <span class="badge">Verified</span></h3>
-          <p>📍 ${pg.city}</p>
-          <p>💰 ${pg.price}</p>
-
-          <!-- 🔥 BUTTONS -->
-          <div class="buttons">
-            <button class="call" onclick="addFav('${pg.name}')">❤️ Save</button>
-            <button class="map" onclick="bookPG('${pg.name}')">📅 Book</button>
-
-            <a href="tel:${pg.contact}">
-              <button class="call">📞 Call</button>
-            </a>
-
-            <a href="https://www.google.com/maps/dir/?api=1&destination=${pg.name}" target="_blank">
-              <button class="map">📍 Route</button>
-            </a>
-          </div>
-
-          <!-- ⭐ REVIEWS -->
-          <div class="review-box">
-            ${reviewHTML}
-            <input id="rev${index}" placeholder="Write review">
-            <button onclick="addReview(${index})">Add</button>
-          </div>
-
-        </div>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${pg.name}" target="_blank">
+          <button>📍 Route</button>
+        </a>
       </div>
+    </div>
     `;
+  });
+
+  document.getElementById("results").innerHTML = html;
+});
+
+// 🔍 SEARCH
+function searchPG(){
+  let val = document.getElementById("search").value.toLowerCase();
+
+  db.collection("pgs").get().then(snapshot => {
+    let html = "";
+
+    snapshot.forEach(doc => {
+      let pg = doc.data();
+
+      if(pg.city.toLowerCase().includes(val)){
+        html += `<div class="card">
+          <h3>${pg.name}</h3>
+          <p>${pg.city}</p>
+          <p>${pg.price}</p>
+        </div>`;
+      }
+    });
+
+    document.getElementById("results").innerHTML = html;
   });
 }
 
-// ⭐ ADD REVIEW
-function addReview(i) {
-  if (!user) {
-    alert("Login first 🔐");
-    return;
-  }
-
-  let input = document.getElementById("rev" + i).value;
-
-  let reviews = JSON.parse(localStorage.getItem("reviews" + i)) || [];
-  reviews.push(input);
-
-  localStorage.setItem("reviews" + i, JSON.stringify(reviews));
-
-  location.reload();
+// ❤️ SAVE
+function save(name){
+  alert(name + " saved ❤️");
 }
 
-// 🔍 SEARCH
-function searchPG() {
-  let input = document.getElementById("search").value.toLowerCase();
-
-  let filtered = finalData.filter(pg =>
-    pg.city.toLowerCase().includes(input)
-  );
-
-  displayPG(filtered);
+// 📅 BOOK
+function book(name){
+  alert("Booked " + name + " ✅");
 }
 
-// 📍 NEAR ME
-function nearMe() {
-  window.open("https://www.google.com/maps/search/pg+near+me");
+// 🔐 LOGOUT
+function logout(){
+  firebase.auth().signOut();
 }
