@@ -3,10 +3,6 @@
 <head>
   <title>PGKhojo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- GOOGLE FONT (UNIQUE TEXT 🔥) -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,34 +10,38 @@
 
 <!-- NAVBAR -->
 <nav class="navbar">
-  <h2 class="logo-text">PGKhojo</h2>
-  <a href="login.html">Admin</a>
+  <h2>PGKhojo</h2>
+  <div>
+    <a href="#">Home</a>
+    <a href="login.html">Admin</a>
+    <a href="contact.html">Contact</a>
+    <a href="policy.html">Policy</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <h1 class="main-title">PGKhojo</h1>
-  <p class="tagline">Apna Perfect PG Khojo 🚀</p>
+  <h1>🏠 PGKhojo</h1>
+  <p>Naye shehar me bhi apna ghar 💙</p>
 
   <div class="search-box">
     <input type="text" id="search" placeholder="Search city...">
     <button onclick="searchPG()">Search</button>
   </div>
 
-  <button class="near-btn" onclick="nearMe()">📍 Near Me</button>
+  <button onclick="nearMe()">📍 Near Me</button>
+</section>
+
+<!-- PRICE GUIDE -->
+<section class="price-box">
+  <h3>🚖 Auto Price Guide (Fair Fare)</h3>
+  <p>0-2 km → ₹20-40</p>
+  <p>2-5 km → ₹50-100</p>
+  <p>5-10 km → ₹100-200</p>
 </section>
 
 <!-- RESULTS -->
-<section id="results" class="grid"></section>
-
-<!-- CHAT -->
-<div class="chat-btn" onclick="toggleChat()">💬</div>
-
-<div id="chatbox" class="chatbox">
-  <div id="chatMessages"></div>
-  <input type="text" id="chatInput" placeholder="Ask anything...">
-  <button onclick="sendMessage()">Send</button>
-</div>
+<section id="results"></section>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
