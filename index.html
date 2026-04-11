@@ -2,48 +2,40 @@
 <html>
 <head>
 <title>PGKhojo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="style.css">
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-
 </head>
 
 <body>
 
-<nav class="navbar">
-<h2>PGKhojo</h2>
-<button onclick="logout()">Logout</button>
-</nav>
-
-<div class="search">
-<input id="search" placeholder="Search city">
-<button onclick="searchPG()">Search</button>
+<!-- NAVBAR -->
+<div class="navbar">
+  <h2>PGKhojo 🏠</h2>
+  <button onclick="logout()">Logout</button>
 </div>
 
+<!-- HERO -->
+<div class="hero">
+  <h1>Find Safe PG Anywhere</h1>
+  <p>Naye shehar me bhi apna ghar 💙</p>
+</div>
+
+<!-- SEARCH -->
+<div class="search">
+  <input id="search" placeholder="Search city...">
+  <button onclick="searchPG()">Search</button>
+</div>
+
+<!-- RESULTS -->
 <div id="results"></div>
 
-<script src="data.js"></script>
+<script src="firebase.js"></script>
 <script src="script.js"></script>
-
-<script>
-firebase.initializeApp({
-  apiKey:"AIzaSyABdEEMZ_Q52P5E01Cy2PPmKAAXvHnTetQ",
-  authDomain:"pgkhojo-1180e.firebaseapp.com",
-  projectId:"pgkhojo-1180e"
-});
-
-// PROTECT PAGE
-firebase.auth().onAuthStateChanged(user=>{
-  if(!user){
-    window.location.href="login.html";
-  }
-});
-
-function logout(){
-  firebase.auth().signOut();
-}
-</script>
 
 </body>
 </html>
