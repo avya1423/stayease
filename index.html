@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>PGKhojo</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="style.css">
@@ -16,18 +15,13 @@
 
 <div class="navbar">
   <h2>PGKhojo 🏠</h2>
-  <div>
-    <button onclick="openLogin()">Login</button>
-    <button onclick="logout()">Logout</button>
-  </div>
+  <button onclick="openLogin()">Login</button>
 </div>
 
 <div class="hero">
   <h1>Find Safe PG Anywhere</h1>
   <p>Naye shehar me bhi apna ghar 💙</p>
-</div>
 
-<div class="search">
   <input id="search" placeholder="Search city...">
   <button onclick="searchPG()">Search</button>
 </div>
@@ -36,10 +30,9 @@
 
 <!-- LOGIN POPUP -->
 <div id="loginBox" class="loginBox">
-  <h3>Login 🔐</h3>
+  <h3>Login</h3>
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Password">
-
   <button onclick="login()">Login</button>
   <button onclick="signup()">Signup</button>
 </div>
