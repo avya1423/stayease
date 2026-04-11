@@ -1,4 +1,33 @@
-// 🔥 LOAD DATA REAL TIME
+// 🔐 LOGIN POPUP
+function openLogin(){
+  document.getElementById("loginBox").style.display = "block";
+}
+
+// 🔥 LOGIN
+function login(){
+  firebase.auth().signInWithEmailAndPassword(
+    email.value, password.value
+  ).then(()=>{
+    alert("Login success ✅");
+    document.getElementById("loginBox").style.display = "none";
+  }).catch(e=>alert(e.message));
+}
+
+// 🔥 SIGNUP
+function signup(){
+  firebase.auth().createUserWithEmailAndPassword(
+    email.value, password.value
+  ).then(()=>alert("Account created ✅"))
+  .catch(e=>alert(e.message));
+}
+
+// 🔓 LOGOUT
+function logout(){
+  firebase.auth().signOut();
+  alert("Logged out");
+}
+
+// 🔥 LOAD DATA (NO LOGIN REQUIRED)
 db.collection("pgs").onSnapshot(snapshot => {
 
   let html = "";
@@ -54,17 +83,20 @@ function searchPG(){
   });
 }
 
-// ❤️ SAVE
+// ❤️ SAVE (LOGIN REQUIRED)
 function save(name){
+  if(!firebase.auth().currentUser){
+    alert("Login required 🔐");
+    return;
+  }
   alert(name + " saved ❤️");
 }
 
-// 📅 BOOK
+// 📅 BOOK (LOGIN REQUIRED)
 function book(name){
+  if(!firebase.auth().currentUser){
+    alert("Login required 🔐");
+    return;
+  }
   alert("Booked " + name + " ✅");
-}
-
-// 🔐 LOGOUT
-function logout(){
-  firebase.auth().signOut();
 }
