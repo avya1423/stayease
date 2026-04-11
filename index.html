@@ -7,36 +7,55 @@
 
 <link rel="stylesheet" href="style.css">
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
+<!-- NAVBAR -->
 <div class="navbar">
-  <h2>PGKhojo 🏠</h2>
-  <button onclick="openLogin()">Login</button>
+  <h2 class="logo">PGKhojo</h2>
+  <div>
+    <a href="admin.html">Admin</a>
+    <a href="contact.html">Contact</a>
+    <a href="policy.html">Policy</a>
+  </div>
 </div>
 
+<!-- HERO -->
 <div class="hero">
-  <h1>Find Your Perfect PG</h1>
-  <input id="search" placeholder="Search city...">
-  <button onclick="searchPG()">Search</button>
+  <h1>Find Your Perfect Stay 🏠</h1>
+  <p>Naye shehar me bhi apna ghar 💙</p>
+
+  <div class="search-box">
+    <input id="search" placeholder="Search city...">
+    <button onclick="searchPG()">Search</button>
+  </div>
+
+  <select onchange="filterCity(this.value)">
+    <option value="">All Cities</option>
+    <option>Bhopal</option>
+    <option>Delhi</option>
+    <option>Mumbai</option>
+    <option>Pune</option>
+  </select>
 </div>
 
-<div id="results"></div>
+<!-- RESULTS -->
+<div id="results" class="grid"></div>
 
-<!-- LOGIN POPUP -->
-<div id="loginBox" class="loginBox">
-  <h3>Login</h3>
-  <input id="email" placeholder="Email">
-  <input id="password" type="password">
-  <button onclick="login()">Login</button>
-  <button onclick="signup()">Signup</button>
+<!-- CHAT -->
+<div class="chatbot">
+  <button onclick="toggleChat()">💬</button>
+  <div id="chatBox">
+    <p>Hi 👋 Ask me about PG</p>
+    <input id="chatInput">
+    <button onclick="sendMsg()">Send</button>
+    <div id="chatOutput"></div>
+  </div>
 </div>
 
-<script src="firebase.js"></script>
+<script src="data.js"></script>
 <script src="script.js"></script>
 
 </body>
