@@ -1,48 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PGKhojo - Find PG</title>
+  <title>PGKhojo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+<!-- NAVBAR -->
 <nav class="navbar">
   <h2>PGKhojo</h2>
-  <div>
-    <a href="#">Home</a>
-    <a href="admin.html">Add PG</a>
-    <a href="#">Contact</a>
-  </div>
+  <a href="login.html">Admin</a>
 </nav>
-<header>
-  <img src="logo.png" class="logo-img">
-  <h1 class="title">PGKhojo</h1>
-  <p class="tagline">Apna Perfect PG Khojo</p>
-</header>
 
-<section class="search-section">
-  <input type="text" id="search" placeholder="Search city (Bhopal, Pune...)" />
-  <button onclick="searchPG()">Search</button>
+<!-- HERO SECTION -->
+<section class="hero">
+  <h1>Find Your Perfect PG 🏠</h1>
+  <p>Fast • Easy • Reliable</p>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Search city...">
+    <button onclick="searchPG()">Search</button>
+  </div>
 </section>
 
+<!-- RESULTS -->
 <section id="results" class="grid"></section>
-  <div class="filters">
-  <select id="priceFilter" onchange="filterPG()">
-    <option value="">Filter by Price</option>
-    <option value="5000">Under ₹5000</option>
-    <option value="7000">Under ₹7000</option>
-  </select>
-  </div>
-
-<!-- CHAT -->
-<div class="chat-btn" onclick="toggleChat()">💬</div>
-
-<div id="chatbox" class="chatbox">
-  <div id="chatMessages"></div>
-  <input type="text" id="chatInput" placeholder="Ask something..." />
-  <button onclick="sendMessage()">Send</button>
-</div>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
