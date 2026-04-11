@@ -10,13 +10,22 @@ function displayPG(data) {
     results.innerHTML += `
       <div class="card">
         <img src="${pg.image}">
-        <h3>${pg.name}</h3>
-        <p>📍 ${pg.city}</p>
-        <p>💰 ${pg.price}</p>
-        <p>📞 ${pg.contact}</p>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=${pg.name}" target="_blank">
-          📍 Navigate
-        </a>
+        
+        <div class="content">
+          <h3>${pg.name} <span class="badge">Verified</span></h3>
+          <p>📍 ${pg.city}</p>
+          <p>💰 ${pg.price}</p>
+
+          <div class="buttons">
+            <a href="tel:${pg.contact}">
+              <button class="call">📞 Call</button>
+            </a>
+
+            <a href="https://www.google.com/maps/dir/?api=1&destination=${pg.name}" target="_blank">
+              <button class="map">📍 Route</button>
+            </a>
+          </div>
+        </div>
       </div>
     `;
   });
@@ -33,24 +42,5 @@ function searchPG() {
 }
 
 function nearMe() {
-  alert("Opening nearby PGs 📍");
   window.open("https://www.google.com/maps/search/pg+near+me");
-}
-
-function toggleChat() {
-  let chat = document.getElementById("chatbox");
-  chat.style.display = chat.style.display === "none" ? "block" : "none";
-}
-
-function sendMessage() {
-  let input = document.getElementById("chatInput").value;
-  let chat = document.getElementById("chatMessages");
-
-  chat.innerHTML += `<p>You: ${input}</p>`;
-
-  if(input.toLowerCase().includes("bhopal")){
-    document.getElementById("search").value="Bhopal";
-    searchPG();
-    chat.innerHTML += `<p>Bot: Showing PG in Bhopal 👇</p>`;
-  }
 }
