@@ -99,3 +99,6 @@ body {
   font-size: 14px;
   color: gray;
 }
+button {
+  cursor: pointer;
+}
