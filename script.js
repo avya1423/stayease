@@ -1,3 +1,4 @@
+// LOGIN POPUP
 function openLogin(){
   document.getElementById("loginBox").style.display="block";
 }
@@ -20,7 +21,7 @@ function signup(){
   .catch(e=>alert(e.message));
 }
 
-// LOAD DATA
+// 🔥 IMPORTANT: ALWAYS SHOW DATA (NO LOGIN REQUIRED)
 db.collection("pgs").onSnapshot(snapshot=>{
   let html="";
 
@@ -30,13 +31,14 @@ db.collection("pgs").onSnapshot(snapshot=>{
     html+=`
     <div class="card">
       <h3>${pg.name}</h3>
-      <p>${pg.city}</p>
-      <p>${pg.price}</p>
+      <p>📍 ${pg.city}</p>
+      <p>💰 ${pg.price}</p>
 
       <a href="tel:${pg.contact}">
-        <button>Call</button>
+        <button>📞 Call</button>
       </a>
-    </div>`;
+    </div>
+    `;
   });
 
   document.getElementById("results").innerHTML=html;
