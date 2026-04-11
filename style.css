@@ -1,58 +1,105 @@
 body{
   margin:0;
-  font-family:'Segoe UI';
-  background:#eef2f7;
+  font-family:'Poppins',sans-serif;
+  background:#f8fafc;
 }
 
+/* NAVBAR */
 .navbar{
-  background:linear-gradient(135deg,#4facfe,#00f2fe);
-  color:white;
-  padding:15px;
+  background:white;
+  padding:15px 20px;
   display:flex;
   justify-content:space-between;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
+.logo{
+  color:#ff4d4d;
+}
+
+/* HERO */
 .hero{
   text-align:center;
+  padding:40px;
+  background:linear-gradient(135deg,#ff4d4d,#ff7a7a);
+  color:white;
+}
+
+.search-box{
+  margin-top:15px;
+}
+
+.search-box input{
+  padding:12px;
+  width:250px;
+  border-radius:10px;
+  border:none;
+}
+
+.search-box button{
+  padding:12px;
+  background:black;
+  color:white;
+  border:none;
+  border-radius:10px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
   padding:20px;
 }
 
-input{
-  padding:10px;
-  margin:5px;
-}
-
+/* CARD */
 .card{
   background:white;
-  margin:15px;
-  border-radius:12px;
+  border-radius:15px;
   overflow:hidden;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
 }
 
 .card img{
   width:100%;
-  height:180px;
+  height:160px;
   object-fit:cover;
 }
 
-.card-content{
+.content{
   padding:10px;
 }
 
-button{
-  padding:8px;
-  border:none;
-  border-radius:6px;
-  margin:5px;
+.price{
+  color:#ff4d4d;
+  font-weight:bold;
 }
 
-.loginBox{
+/* BUTTON */
+button{
+  padding:8px;
+  margin-top:5px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* CHAT */
+.chatbot{
   position:fixed;
-  top:30%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:white;
-  padding:20px;
+  bottom:20px;
+  right:20px;
+}
+
+#chatBox{
   display:none;
+  background:white;
+  padding:10px;
+  width:200px;
+  border-radius:10px;
 }
