@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>PGKhojo</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="style.css">
@@ -9,30 +10,40 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
   <h2>PGKhojo 🏠</h2>
-  <button onclick="logout()">Logout</button>
+  <div>
+    <button onclick="openLogin()">Login</button>
+    <button onclick="logout()">Logout</button>
+  </div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
   <h1>Find Safe PG Anywhere</h1>
   <p>Naye shehar me bhi apna ghar 💙</p>
 </div>
 
-<!-- SEARCH -->
 <div class="search">
   <input id="search" placeholder="Search city...">
   <button onclick="searchPG()">Search</button>
 </div>
 
-<!-- RESULTS -->
 <div id="results"></div>
+
+<!-- LOGIN POPUP -->
+<div id="loginBox" class="loginBox">
+  <h3>Login 🔐</h3>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+  <button onclick="signup()">Signup</button>
+</div>
 
 <script src="firebase.js"></script>
 <script src="script.js"></script>
