@@ -1,46 +1,40 @@
 body{
   margin:0;
   font-family:'Segoe UI';
-  background:#eef2f7;
+  background:#f0f4ff;
 }
 
+/* NAVBAR */
 .navbar{
-  background:linear-gradient(135deg,#4facfe,#00f2fe);
+  background:#1e3a8a;
   color:white;
   padding:15px;
   display:flex;
   justify-content:space-between;
 }
 
+/* HERO */
 .hero{
   text-align:center;
-  padding:20px;
+  padding:30px;
 }
 
-.search{
-  text-align:center;
-  margin:20px;
-}
-
-.search input{
+/* INPUT */
+input{
   padding:10px;
-  width:200px;
+  margin:5px;
 }
 
-.search button{
-  padding:10px;
-  background:#4facfe;
-  color:white;
-  border:none;
-}
-
+/* CARD */
 .card{
   background:white;
   margin:15px;
   padding:15px;
   border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
+/* LOGIN */
 .loginBox{
   position:fixed;
   top:30%;
@@ -49,4 +43,5 @@ body{
   background:white;
   padding:20px;
   display:none;
+  border-radius:10px;
 }
