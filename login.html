@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login - PGKhojo</title>
+<title>Login</title>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
+<style>
+body {font-family:Arial;text-align:center;margin-top:100px;}
+input{padding:10px;margin:10px;}
+button{padding:10px;background:blue;color:white;}
+</style>
 </head>
 
-<body style="text-align:center; margin-top:100px; font-family:Arial;">
+<body>
 
 <h2>Login 🔐</h2>
 
-<input id="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
+<input id="email" placeholder="Email"><br>
+<input id="password" type="password" placeholder="Password"><br>
 
 <button onclick="login()">Login</button>
+<button onclick="signup()">Signup</button>
 
 <script>
-
-// 🔥 TERA REAL FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyABdEEMZ_Q52P5E01Cy2PPmKAAXvHnTetQ",
   authDomain: "pgkhojo-1180e.firebaseapp.com",
   projectId: "pgkhojo-1180e",
-  storageBucket: "pgkhojo-1180e.firebasestorage.app",
-  messagingSenderId: "976145591846",
-  appId: "1:976145591846:web:be2ecc09a15225eb4d80e7"
 };
 
-// INIT
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
 
-// LOGIN FUNCTION
-function login() {
-  let email = document.getElementById("email").value;
-  let pass = document.getElementById("password").value;
-
-  auth.signInWithEmailAndPassword(email, pass)
-    .then(() => {
-      alert("Login Success ✅");
-      window.location.href = "index.html";
-    })
-    .catch(err => alert(err.message));
+// LOGIN
+function login(){
+  firebase.auth().signInWithEmailAndPassword(
+    email.value,password.value
+  ).then(()=>{
+    window.location.href="index.html";
+  }).catch(e=>alert(e.message));
 }
 
+// SIGNUP
+function signup(){
+  firebase.auth().createUserWithEmailAndPassword(
+    email.value,password.value
+  ).then(()=>alert("Account created"))
+  .catch(e=>alert(e.message));
+}
 </script>
 
 </body>
