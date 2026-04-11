@@ -1,67 +1,65 @@
-// LOGIN POPUP
 function openLogin(){
-  document.getElementById("loginBox").style.display="block";
+  loginBox.style.display="block";
 }
 
-// LOGIN
 function login(){
-  firebase.auth().signInWithEmailAndPassword(
-    email.value,password.value
-  ).then(()=>{
-    alert("Login success");
-    loginBox.style.display="none";
-  }).catch(e=>alert(e.message));
-}
-
-// SIGNUP
-function signup(){
-  firebase.auth().createUserWithEmailAndPassword(
-    email.value,password.value
-  ).then(()=>alert("Account created"))
+  auth.signInWithEmailAndPassword(email.value,password.value)
+  .then(()=>alert("Login success"))
   .catch(e=>alert(e.message));
 }
 
-// 🔥 IMPORTANT: ALWAYS SHOW DATA (NO LOGIN REQUIRED)
+function signup(){
+  auth.createUserWithEmailAndPassword(email.value,password.value)
+  .then(()=>alert("Account created"))
+  .catch(e=>alert(e.message));
+}
+
+// 🔥 LOAD DATA
+let allData=[];
+
 db.collection("pgs").onSnapshot(snapshot=>{
-  let html="";
+  allData=[];
 
   snapshot.forEach(doc=>{
-    let pg=doc.data();
-
-    html+=`
-    <div class="card">
-      <h3>${pg.name}</h3>
-      <p>📍 ${pg.city}</p>
-      <p>💰 ${pg.price}</p>
-
-      <a href="tel:${pg.contact}">
-        <button>📞 Call</button>
-      </a>
-    </div>
-    `;
+    allData.push(doc.data());
   });
 
-  document.getElementById("results").innerHTML=html;
+  display(allData);
 });
 
-// SEARCH
+function display(data){
+  let html="";
+
+  data.forEach(pg=>{
+    html+=`
+    <div class="card">
+      <img src="${pg.image}">
+      <div class="card-content">
+        <h3>${pg.name}</h3>
+        <p>📍 ${pg.city}</p>
+        <p>💰 ${pg.price}</p>
+
+        <a href="tel:${pg.contact}">
+          <button>📞 Call</button>
+        </a>
+
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${pg.name}" target="_blank">
+          <button>📍 Route</button>
+        </a>
+      </div>
+    </div>`;
+  });
+
+  results.innerHTML=html;
+}
+
+// 🔍 SEARCH
 function searchPG(){
   let val=search.value.toLowerCase();
 
-  db.collection("pgs").get().then(snapshot=>{
-    let html="";
+  let filtered=allData.filter(pg =>
+    pg.city.toLowerCase().includes(val)
+  );
 
-    snapshot.forEach(doc=>{
-      let pg=doc.data();
-
-      if(pg.city.toLowerCase().includes(val)){
-        html+=`<div class="card">
-        <h3>${pg.name}</h3>
-        <p>${pg.city}</p>
-        </div>`;
-      }
-    });
-
-    results.innerHTML=html;
-  });
+  display(filtered);
 }
