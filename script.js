@@ -85,3 +85,15 @@ function searchPG() {
 function nearMe() {
   window.open("https://www.google.com/maps/search/pg+near+me");
 }
+function addFav(name) {
+  let fav = JSON.parse(localStorage.getItem("fav")) || [];
+  fav.push(name);
+  localStorage.setItem("fav", JSON.stringify(fav));
+  alert("Added to Favourite ❤️");
+}
+function bookPG(name) {
+  let booking = JSON.parse(localStorage.getItem("booking")) || [];
+  booking.push(name);
+  localStorage.setItem("booking", JSON.stringify(booking));
+  alert("Booking Done ✅");
+}
