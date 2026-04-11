@@ -1,42 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
+<title>Login - PGKhojo</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
 <style>
-body {font-family:Arial;text-align:center;margin-top:100px;}
-input{padding:10px;margin:10px;}
-button{padding:10px;background:blue;color:white;}
+body{
+  margin:0;
+  font-family:'Segoe UI';
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.box{
+  background:white;
+  padding:30px;
+  border-radius:15px;
+  width:300px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h2{
+  margin-bottom:20px;
+}
+
+input{
+  width:90%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  padding:10px 15px;
+  margin:5px;
+  border:none;
+  border-radius:8px;
+  background:#667eea;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#5a67d8;
+}
+
 </style>
 </head>
 
 <body>
 
-<h2>Login 🔐</h2>
+<div class="box">
+  <h2>Login 🔐</h2>
 
-<input id="email" placeholder="Email"><br>
-<input id="password" type="password" placeholder="Password"><br>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
 
-<button onclick="login()">Login</button>
-<button onclick="signup()">Signup</button>
+  <button onclick="login()">Login</button>
+  <button onclick="signup()">Signup</button>
+</div>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyABdEEMZ_Q52P5E01Cy2PPmKAAXvHnTetQ",
-  authDomain: "pgkhojo-1180e.firebaseapp.com",
-  projectId: "pgkhojo-1180e",
-};
 
-firebase.initializeApp(firebaseConfig);
+// 🔥 FIREBASE CONFIG (same tera)
+firebase.initializeApp({
+  apiKey:"AIzaSyABdEEMZ_Q52P5E01Cy2PPmKAAXvHnTetQ",
+  authDomain:"pgkhojo-1180e.firebaseapp.com",
+  projectId:"pgkhojo-1180e"
+});
 
 // LOGIN
 function login(){
   firebase.auth().signInWithEmailAndPassword(
     email.value,password.value
   ).then(()=>{
+    alert("Login Success ✅");
     window.location.href="index.html";
   }).catch(e=>alert(e.message));
 }
@@ -45,9 +93,10 @@ function login(){
 function signup(){
   firebase.auth().createUserWithEmailAndPassword(
     email.value,password.value
-  ).then(()=>alert("Account created"))
+  ).then(()=>alert("Account created ✅"))
   .catch(e=>alert(e.message));
 }
+
 </script>
 
 </body>
