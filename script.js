@@ -2,26 +2,25 @@ function openLogin(){
   document.getElementById("loginBox").style.display="block";
 }
 
+// LOGIN
 function login(){
-  firebase.auth().signInWithEmailAndPassword(email.value,password.value)
-  .then(()=>{
+  firebase.auth().signInWithEmailAndPassword(
+    email.value,password.value
+  ).then(()=>{
     alert("Login success");
-    document.getElementById("loginBox").style.display="none";
-  })
-  .catch(e=>alert(e.message));
+    loginBox.style.display="none";
+  }).catch(e=>alert(e.message));
 }
 
+// SIGNUP
 function signup(){
-  firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
-  .then(()=>alert("Account created"))
+  firebase.auth().createUserWithEmailAndPassword(
+    email.value,password.value
+  ).then(()=>alert("Account created"))
   .catch(e=>alert(e.message));
 }
 
-function logout(){
-  firebase.auth().signOut();
-}
-
-// 🔥 LIVE DATA
+// LOAD DATA
 db.collection("pgs").onSnapshot(snapshot=>{
   let html="";
 
@@ -34,11 +33,8 @@ db.collection("pgs").onSnapshot(snapshot=>{
       <p>${pg.city}</p>
       <p>${pg.price}</p>
 
-      <button onclick="save('${pg.name}')">❤️</button>
-      <button onclick="book('${pg.name}')">📅</button>
-
       <a href="tel:${pg.contact}">
-        <button>📞</button>
+        <button>Call</button>
       </a>
     </div>`;
   });
@@ -46,6 +42,7 @@ db.collection("pgs").onSnapshot(snapshot=>{
   document.getElementById("results").innerHTML=html;
 });
 
+// SEARCH
 function searchPG(){
   let val=search.value.toLowerCase();
 
@@ -63,22 +60,6 @@ function searchPG(){
       }
     });
 
-    document.getElementById("results").innerHTML=html;
+    results.innerHTML=html;
   });
-}
-
-function save(n){
-  if(!firebase.auth().currentUser){
-    alert("Login required");
-    return;
-  }
-  alert("Saved "+n);
-}
-
-function book(n){
-  if(!firebase.auth().currentUser){
-    alert("Login required");
-    return;
-  }
-  alert("Booked "+n);
 }
