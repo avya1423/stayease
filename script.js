@@ -1,3 +1,16 @@
+let user = localStorage.getItem("user") || "";
+
+function showLogin() {
+  document.getElementById("loginBox").style.display = "block";
+}
+
+function login() {
+  let u = document.getElementById("user").value;
+  localStorage.setItem("user", u);
+  alert("Welcome " + u);
+  location.reload();
+}
+
 let finalData = pgData;
 
 window.onload = () => displayPG(finalData);
@@ -6,7 +19,12 @@ function displayPG(data) {
   let results = document.getElementById("results");
   results.innerHTML = "";
 
-  data.forEach(pg => {
+  data.forEach((pg, index) => {
+
+    let reviews = JSON.parse(localStorage.getItem("reviews"+index)) || [];
+
+    let reviewHTML = reviews.map(r => `<div class="review">⭐ ${r}</div>`).join("");
+
     results.innerHTML += `
       <div class="card">
         <img src="${pg.image}">
@@ -25,10 +43,33 @@ function displayPG(data) {
               <button class="map">📍 Route</button>
             </a>
           </div>
+
+          <!-- REVIEWS -->
+          <div class="review-box">
+            ${reviewHTML}
+            <input id="rev${index}" placeholder="Write review">
+            <button onclick="addReview(${index})">Add</button>
+          </div>
         </div>
       </div>
     `;
   });
+}
+
+function addReview(i) {
+  if(!user) {
+    alert("Login first 🔐");
+    return;
+  }
+
+  let input = document.getElementById("rev"+i).value;
+
+  let reviews = JSON.parse(localStorage.getItem("reviews"+i)) || [];
+  reviews.push(input);
+
+  localStorage.setItem("reviews"+i, JSON.stringify(reviews));
+
+  location.reload();
 }
 
 function searchPG() {
