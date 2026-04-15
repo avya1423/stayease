@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Admin</title>
+<body style="text-align:center">
 
-<link rel="stylesheet" href="style.css">
-
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-</head>
-
-<body class="center">
-
-<div class="box">
 <h2>Add PG</h2>
 
-<input id="name" placeholder="Name">
-<input id="city" placeholder="City">
-<input id="price" placeholder="Price">
-<input id="contact" placeholder="Contact">
+<input id="name" placeholder="Name"><br><br>
+<input id="city" placeholder="City"><br><br>
+<input id="price" placeholder="Price"><br><br>
+<input id="contact" placeholder="Contact"><br><br>
+<input id="image" placeholder="Image URL"><br><br>
 
-<button onclick="addPG()">Add</button>
-</div>
+<button onclick="add()">Add</button>
 
-<script src="firebase.js"></script>
+<script src="data.js"></script>
 
 <script>
-function addPG(){
-  db.collection("pgs").add({
+function add(){
+  let data = JSON.parse(localStorage.getItem("pgData")) || pgData;
+
+  data.push({
     name:name.value,
     city:city.value,
     price:price.value,
-    contact:contact.value
-  }).then(()=>alert("Added"));
+    contact:contact.value,
+    image:image.value
+  });
+
+  localStorage.setItem("pgData", JSON.stringify(data));
+
+  alert("PG Added ✅");
 }
 </script>
 
