@@ -136,7 +136,37 @@ button{
   text-align:center;
   width:300px;
 }
+.profile-container{
+  position:relative;
+  cursor:pointer;
+  font-size:20px;
+}
 
+.profile-menu{
+  display:none;
+  position:absolute;
+  right:0;
+  top:30px;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  width:150px;
+}
+
+.profile-menu p{
+  margin:5px 0;
+  font-weight:bold;
+}
+
+.profile-menu button{
+  width:100%;
+  padding:6px;
+  border:none;
+  background:#ff4d4d;
+  color:white;
+  border-radius:6px;
+}
 .login-box input{
   width:90%;
   padding:10px;
