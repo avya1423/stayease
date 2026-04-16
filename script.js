@@ -22,8 +22,7 @@ function display(data){
 
   results.innerHTML=html;
 }
-
-// LOAD
+// ON LOAD
 window.onload = function(){
 
   let user = localStorage.getItem("user");
@@ -31,10 +30,26 @@ window.onload = function(){
   if(user){
     document.getElementById("loginModal").style.display="none";
     document.getElementById("userName").innerText = "Hi, " + user;
-  } else {
-    document.getElementById("logoutBtn").style.display="none";
+
+    // PG show karo
+    display(pgData);
   }
 };
+
+// PROFILE TOGGLE
+function toggleProfile(){
+  let menu = document.getElementById("profileMenu");
+
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+// LOGOUT
+function logout(){
+  localStorage.removeItem("user");
+  alert("Logged out 👋");
+  location.reload();
+}
+
 
 // SEARCH
 function searchPG(){
