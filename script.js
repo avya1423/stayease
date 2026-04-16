@@ -110,3 +110,11 @@ function continueGuest(){
 
   document.getElementById("loginModal").style.display="none";
 }
+function logout(){
+
+  localStorage.removeItem("user");
+
+  alert("Logged out 👋");
+
+  location.reload();
+}
