@@ -20,9 +20,10 @@ function display(data){
     </div>`;
   });
 
-  results.innerHTML=html;
+  document.getElementById("results").innerHTML = html;
 }
-// ON LOAD
+
+// ON LOAD (FINAL FIXED)
 window.onload = function(){
 
   let user = localStorage.getItem("user");
@@ -31,7 +32,7 @@ window.onload = function(){
     document.getElementById("loginModal").style.display="none";
     document.getElementById("userName").innerText = "Hi, " + user;
 
-    // PG show karo
+    // 🔥 LOGIN KE BAAD PG SHOW
     display(pgData);
   }
 };
@@ -39,22 +40,63 @@ window.onload = function(){
 // PROFILE TOGGLE
 function toggleProfile(){
   let menu = document.getElementById("profileMenu");
-
   menu.style.display = (menu.style.display === "block") ? "none" : "block";
 }
 
-// LOGOUT
+// LOGIN
+function loginUser(){
+
+  let name = document.getElementById("username").value;
+  let email = document.getElementById("email").value;
+
+  if(!name || !email){
+    alert("Fill details ❌");
+    return;
+  }
+
+  localStorage.setItem("user", name);
+
+  document.getElementById("loginModal").style.display="none";
+  document.getElementById("userName").innerText = "Hi, " + name;
+
+  // 🔥 LOGIN KE BAAD PG SHOW
+  display(pgData);
+
+  alert("Welcome " + name + " 🎉");
+}
+
+// GUEST LOGIN
+function continueGuest(){
+
+  localStorage.setItem("user", "Guest");
+
+  document.getElementById("loginModal").style.display="none";
+  document.getElementById("userName").innerText = "Hi, Guest";
+
+  // 🔥 GUEST KE BAAD BHI PG SHOW
+  display(pgData);
+}
+
+// LOGOUT (FINAL FIXED)
 function logout(){
+
   localStorage.removeItem("user");
+
   alert("Logged out 👋");
+
   location.reload();
 }
 
-
 // SEARCH
 function searchPG(){
-  let val=search.value.toLowerCase();
-  display(finalData.filter(p=>p.city.toLowerCase().includes(val)));
+  let val = document.getElementById("search").value.toLowerCase();
+
+  let filtered = finalData.filter(p =>
+    p.city.toLowerCase().includes(val) ||
+    p.name.toLowerCase().includes(val)
+  );
+
+  display(filtered);
 }
 
 // FILTER
@@ -78,58 +120,16 @@ function fav(name){
 
 // CHATBOT
 function toggleChat(){
-  chatBox.style.display=chatBox.style.display==="block"?"none":"block";
+  let box = document.getElementById("chatBox");
+  box.style.display = box.style.display==="block"?"none":"block";
 }
 
 function sendMsg(){
-  let msg=chatInput.value.toLowerCase();
-  let reply="Try searching PG 😄";
+  let msg = document.getElementById("chatInput").value.toLowerCase();
+  let reply = "Try searching PG 😄";
 
   if(msg.includes("bhopal")) reply="Bhopal me best PG available 👍";
 
-  chatOutput.innerHTML+=`<p>You: ${msg}</p>`;
-  chatOutput.innerHTML+=`<p>Bot: ${reply}</p>`;
-}
-// CHECK LOGIN
-window.onload = function(){
-
-  let user = localStorage.getItem("user");
-
-  if(user){
-    document.getElementById("loginModal").style.display="none";
-  }
-};
-
-// LOGIN
-function loginUser(){
-
-  let name = document.getElementById("username").value;
-  let email = document.getElementById("email").value;
-
-  if(!name || !email){
-    alert("Fill details ❌");
-    return;
-  }
-
-  localStorage.setItem("user", name);
-
-  document.getElementById("loginModal").style.display="none";
-
-  alert("Welcome " + name + " 🎉");
-}
-
-// GUEST
-function continueGuest(){
-
-  localStorage.setItem("user", "Guest");
-
-  document.getElementById("loginModal").style.display="none";
-}
-function logout(){
-
-  localStorage.removeItem("user");
-
-  alert("Logged out 👋");
-
-  location.reload();
+  document.getElementById("chatOutput").innerHTML += `<p>You: ${msg}</p>`;
+  document.getElementById("chatOutput").innerHTML += `<p>Bot: ${reply}</p>`;
 }
