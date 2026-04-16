@@ -24,7 +24,17 @@ function display(data){
 }
 
 // LOAD
-window.onload=()=>display(finalData);
+window.onload = function(){
+
+  let user = localStorage.getItem("user");
+
+  if(user){
+    document.getElementById("loginModal").style.display="none";
+    document.getElementById("userName").innerText = "Hi, " + user;
+  } else {
+    document.getElementById("logoutBtn").style.display="none";
+  }
+};
 
 // SEARCH
 function searchPG(){
