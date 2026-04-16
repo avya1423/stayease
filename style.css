@@ -158,3 +158,22 @@ button{
 .guest{
   background:#333;
 }
+.profile{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+#userName{
+  font-weight:bold;
+  color:#fff;
+}
+
+#logoutBtn{
+  background:#ff4d4d;
+  color:white;
+  border:none;
+  padding:5px 10px;
+  border-radius:6px;
+  cursor:pointer;
+}
