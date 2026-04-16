@@ -65,3 +65,38 @@ function sendMsg(){
   chatOutput.innerHTML+=`<p>You: ${msg}</p>`;
   chatOutput.innerHTML+=`<p>Bot: ${reply}</p>`;
 }
+// CHECK LOGIN
+window.onload = function(){
+
+  let user = localStorage.getItem("user");
+
+  if(user){
+    document.getElementById("loginModal").style.display="none";
+  }
+};
+
+// LOGIN
+function loginUser(){
+
+  let name = document.getElementById("username").value;
+  let email = document.getElementById("email").value;
+
+  if(!name || !email){
+    alert("Fill details ❌");
+    return;
+  }
+
+  localStorage.setItem("user", name);
+
+  document.getElementById("loginModal").style.display="none";
+
+  alert("Welcome " + name + " 🎉");
+}
+
+// GUEST
+function continueGuest(){
+
+  localStorage.setItem("user", "Guest");
+
+  document.getElementById("loginModal").style.display="none";
+}
