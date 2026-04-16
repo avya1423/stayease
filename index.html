@@ -12,16 +12,21 @@
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
   <h2 class="logo">PGKhojo</h2>
-  <div>
+
+  <div class="nav-links">
     <a href="admin.html">Admin</a>
     <a href="contact.html">Contact</a>
     <a href="policy.html">Policy</a>
-    <div class="profile">
-  <span id="userName"></span>
-  <button onclick="logout()" id="logoutBtn">Logout</button>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="profile-container" onclick="toggleProfile()">
+    👤
+    <div id="profileMenu" class="profile-menu">
+      <p id="userName"></p>
+      <button onclick="logout()">Logout</button>
     </div>
   </div>
 </div>
