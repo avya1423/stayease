@@ -65,3 +65,4 @@ function sendMsg(){
   chatOutput.innerHTML+=`<p>You: ${msg}</p>`;
   chatOutput.innerHTML+=`<p>Bot: ${reply}</p>`;
 }
+let rating = (Math.random()*1 + 4).toFixed(1);
