@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>PGKhojo</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-</head>
-
-<body>
-
+@@ -15,73 +15,86 @@
 <div class="navbar">
   <h2 class="logo">PGKhojo</h2>
 
@@ -39,6 +26,15 @@
   <div class="search-box">
     <input id="search" placeholder="Search city...">
     <button onclick="searchPG()">Search</button>
+    <input id="search" placeholder="Search city or PG name..." onkeydown="searchOnEnter(event)">
+    <button class="btn-animated" onclick="searchPG()">Search Now</button>
+    <button class="btn-ghost" onclick="scrollToResults()">Browse PGs</button>
+  </div>
+
+  <div class="hero-stats">
+    <span>✅ Verified Listings</span>
+    <span>⚡ Fast Contact</span>
+    <span>📍 Easy Route</span>
   </div>
 
   <select onchange="filterCity(this.value)">
@@ -56,10 +52,20 @@
 <!-- CHAT -->
 <div class="chatbot">
   <button onclick="toggleChat()">💬</button>
+  <button class="chat-toggle btn-animated" onclick="toggleChat()">💬 Chat</button>
   <div id="chatBox">
     <p>Hi 👋 Ask me about PG</p>
     <input id="chatInput">
     <button onclick="sendMsg()">Send</button>
+    <div class="chat-header">PGKhojo Assistant</div>
+    <p class="chat-welcome">Hi 👋 Ask me about PG, city, price, or contact.</p>
+    <div class="chat-suggestions">
+      <button onclick="setQuickMsg('Show Delhi PG')">Delhi</button>
+      <button onclick="setQuickMsg('PG price')">Price</button>
+      <button onclick="setQuickMsg('How to contact?')">Contact</button>
+    </div>
+    <input id="chatInput" placeholder="Type your message..." onkeydown="chatOnEnter(event)">
+    <button class="btn-animated" onclick="sendMsg()">Send</button>
     <div id="chatOutput"></div>
   </div>
 </div>
@@ -85,5 +91,3 @@
   
   <p>© 2026 PGKhojo | All Rights Reserved</p>
 </div>
-</body>
-</html>
