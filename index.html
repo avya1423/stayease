@@ -20,21 +20,13 @@
 <div class="navbar">
   <h2 class="logo">PGKhojo</h2>
 
-  <div class="nav-links">
-    <a href="#">Home</a>
-    <a href="contact.html">Contact</a>
-    <a href="policy.html">Policy</a>
-  </div>
-
   <!-- PROFILE -->
   <div class="profile-container" onclick="toggleProfile()">
     <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
 
     <div id="profileMenu" class="profile-menu">
-
       <p id="userName"></p>
 
-      <!-- SETTINGS -->
       <div id="profileSettings">
         <input type="text" id="newName" placeholder="Update Name">
         <input type="file" onchange="changeDP(event)">
@@ -52,87 +44,74 @@
   <p>From one home to another ❤️</p>
 
   <div class="search-box">
-    <input id="search" placeholder="Search city or PG..." onkeydown="searchOnEnter(event)">
+    <input id="search" placeholder="Search..." onkeydown="searchOnEnter(event)">
     <button onclick="searchPG()">Search</button>
   </div>
 
-  <!-- FILTER -->
-  <div style="margin-top:10px">
-    <select onchange="filterCity(this.value)">
-      <option value="">All Cities</option>
-      <option>Bhopal</option>
-      <option>Delhi</option>
-      <option>Mumbai</option>
-      <option>Pune</option>
-      <option>Patna</option>
-    </select>
+  <select onchange="filterCity(this.value)">
+    <option value="">All Cities</option>
+    <option>Bhopal</option>
+    <option>Delhi</option>
+    <option>Mumbai</option>
+    <option>Pune</option>
+    <option>Patna</option>
+  </select>
 
-    <select onchange="filterGender(this.value)">
-      <option value="">All</option>
-      <option>Boys</option>
-      <option>Girls</option>
-    </select>
-  </div>
+  <select onchange="filterGender(this.value)">
+    <option value="">All</option>
+    <option>Boys</option>
+    <option>Girls</option>
+  </select>
 
-  <br>
+  <br><br>
   <button onclick="toggleDark()">🌙 Dark Mode</button>
+</div>
+
+<!-- ADD PG BUTTON -->
+<div style="text-align:center; margin:20px;">
+  <button onclick="openAddPG()">➕ Add Your PG</button>
+</div>
+
+<!-- ADD PG MODAL -->
+<div id="pgModal" class="login-modal" style="display:none;">
+  <div class="login-box">
+    <h3>Add Your PG</h3>
+
+    <input id="pgName" placeholder="PG Name">
+    <input id="pgCity" placeholder="City">
+    <input id="pgContact" placeholder="Phone">
+    <input id="pgEmail" placeholder="Email">
+
+    <button onclick="addPG()">Submit</button>
+    <button onclick="closeAddPG()">Cancel</button>
+  </div>
 </div>
 
 <!-- RESULTS -->
 <div id="results" class="grid"></div>
 
-<!-- ADD PG -->
-<div class="login-box" style="margin:20px auto">
-  <h3>Add Your PG</h3>
-
-  <input id="pgName" placeholder="PG Name">
-  <input id="pgCity" placeholder="City">
-  <input id="pgContact" placeholder="Phone">
-  <input id="pgEmail" placeholder="Email">
-
-  <button onclick="addPG()">Submit</button>
-</div>
-
-<!-- LOGIN MODAL -->
+<!-- LOGIN -->
 <div id="loginModal" class="login-modal">
   <div class="login-box">
+    <h2>Welcome 🏠</h2>
 
-    <h2>Welcome to PGKhojo 🏠</h2>
-
-    <input type="text" id="username" placeholder="Enter Name">
-    <input type="email" id="email" placeholder="Enter Email">
+    <input id="username" placeholder="Name">
+    <input id="email" placeholder="Email">
 
     <button onclick="loginUser()">Login</button>
-    <button onclick="continueGuest()" class="guest">Guest</button>
-
-  </div>
-</div>
-
-<!-- CHAT -->
-<div class="chatbot">
-  <button onclick="toggleChat()">💬</button>
-
-  <div id="chatBox">
-    <p><b>Assistant 🤖</b></p>
-
-    <input id="chatInput" placeholder="Ask..." onkeydown="chatOnEnter(event)">
-    <button onclick="sendMsg()">Send</button>
-
-    <div id="chatOutput"></div>
+    <button onclick="continueGuest()">Guest</button>
   </div>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-
   <p>
-    Home | Contact Us | Careers | About Us |
-    Privacy Policy | Refund Policy | Terms
+    <a href="#">Home</a> |
+    <a href="#">Contact</a> |
+    <a href="#">About</a> |
+    <a href="#">Policy</a>
   </p>
-
-  <p>Available in: Bhopal, Delhi, Mumbai, Pune, Patna</p>
-
-  <p>© 2026 PGKhojo</p>
+  <p>Available: Bhopal, Delhi, Mumbai, Pune, Patna</p>
 </div>
 
 <script src="data.js"></script>
