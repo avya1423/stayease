@@ -21,7 +21,7 @@
   <h2 class="logo">PGKhojo</h2>
 
   <div class="nav-links">
-    <a href="admin.html">Admin</a>
+    <a href="#">Home</a>
     <a href="contact.html">Contact</a>
     <a href="policy.html">Policy</a>
   </div>
@@ -34,7 +34,7 @@
 
       <p id="userName"></p>
 
-      <!-- SETTINGS (ONLY LOGIN USER) -->
+      <!-- SETTINGS -->
       <div id="profileSettings">
         <input type="text" id="newName" placeholder="Update Name">
         <input type="file" onchange="changeDP(event)">
@@ -52,61 +52,70 @@
   <p>From one home to another ❤️</p>
 
   <div class="search-box">
-    <input id="search" placeholder="Search city or PG name..." onkeydown="searchOnEnter(event)">
+    <input id="search" placeholder="Search city or PG..." onkeydown="searchOnEnter(event)">
     <button onclick="searchPG()">Search</button>
   </div>
 
-  <div class="hero-stats">
-    <span>✅ Verified Listings</span>
-    <span>⚡ Fast Contact</span>
-    <span>📍 Easy Route</span>
+  <!-- FILTER -->
+  <div style="margin-top:10px">
+    <select onchange="filterCity(this.value)">
+      <option value="">All Cities</option>
+      <option>Bhopal</option>
+      <option>Delhi</option>
+      <option>Mumbai</option>
+      <option>Pune</option>
+      <option>Patna</option>
+    </select>
+
+    <select onchange="filterGender(this.value)">
+      <option value="">All</option>
+      <option>Boys</option>
+      <option>Girls</option>
+    </select>
   </div>
 
-  <select onchange="filterCity(this.value)">
-    <option value="">All Cities</option>
-    <option>Bhopal</option>
-    <option>Delhi</option>
-    <option>Mumbai</option>
-    <option>Pune</option>
-  </select>
-
-  <br><br>
+  <br>
   <button onclick="toggleDark()">🌙 Dark Mode</button>
 </div>
 
 <!-- RESULTS -->
 <div id="results" class="grid"></div>
 
+<!-- ADD PG -->
+<div class="login-box" style="margin:20px auto">
+  <h3>Add Your PG</h3>
+
+  <input id="pgName" placeholder="PG Name">
+  <input id="pgCity" placeholder="City">
+  <input id="pgContact" placeholder="Phone">
+  <input id="pgEmail" placeholder="Email">
+
+  <button onclick="addPG()">Submit</button>
+</div>
+
 <!-- LOGIN MODAL -->
 <div id="loginModal" class="login-modal">
   <div class="login-box">
 
     <h2>Welcome to PGKhojo 🏠</h2>
-    <p>From one home to another ❤️</p>
 
     <input type="text" id="username" placeholder="Enter Name">
     <input type="email" id="email" placeholder="Enter Email">
 
     <button onclick="loginUser()">Login</button>
-    <button onclick="continueGuest()" class="guest">Continue as Guest</button>
+    <button onclick="continueGuest()" class="guest">Guest</button>
 
   </div>
 </div>
 
-<!-- CHATBOT -->
+<!-- CHAT -->
 <div class="chatbot">
   <button onclick="toggleChat()">💬</button>
 
   <div id="chatBox">
-    <p><b>PGKhojo Assistant 🤖</b></p>
+    <p><b>Assistant 🤖</b></p>
 
-    <div class="chat-suggestions">
-      <button onclick="setQuickMsg('Bhopal PG')">Bhopal</button>
-      <button onclick="setQuickMsg('Delhi PG')">Delhi</button>
-      <button onclick="setQuickMsg('Price')">Price</button>
-    </div>
-
-    <input id="chatInput" placeholder="Type your message..." onkeydown="chatOnEnter(event)">
+    <input id="chatInput" placeholder="Ask..." onkeydown="chatOnEnter(event)">
     <button onclick="sendMsg()">Send</button>
 
     <div id="chatOutput"></div>
@@ -115,7 +124,15 @@
 
 <!-- FOOTER -->
 <div class="footer">
-  <p>© 2026 PGKhojo | All Rights Reserved</p>
+
+  <p>
+    Home | Contact Us | Careers | About Us |
+    Privacy Policy | Refund Policy | Terms
+  </p>
+
+  <p>Available in: Bhopal, Delhi, Mumbai, Pune, Patna</p>
+
+  <p>© 2026 PGKhojo</p>
 </div>
 
 <script src="data.js"></script>
