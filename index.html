@@ -1,3 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PGKhojo</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <h2>Loading...</h2>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h2 class="logo">PGKhojo</h2>
+
+  <div class="nav-links">
+    <a href="admin.html">Admin</a>
+    <a href="contact.html">Contact</a>
+    <a href="policy.html">Policy</a>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="profile-container" onclick="toggleProfile()">
+    
+    <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+    <div id="profileMenu" class="profile-menu">
+      <p id="userName"></p>
+
+      <input type="file" onchange="changeDP(event)">
+
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Find Your Perfect Stay 🏠</h1>
+  <p>From One Home To Another💙</p>
+
+  <div class="search-box">
+    <input id="search" placeholder="Search city...">
+    <button onclick="searchPG()">Search</button>
+  </div>
+
+  <select onchange="filterCity(this.value)">
+    <option value="">All Cities</option>
+    <option>Bhopal</option>
+    <option>Delhi</option>
+    <option>Mumbai</option>
+    <option>Pune</option>
+  </select>
+
+  <br><br>
+  <button onclick="toggleDark()">🌙 Dark Mode</button>
+</div>
+
+<!-- RESULTS -->
+<div id="results" class="grid"></div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="login-modal">
+  <div class="login-box">
+
+    <h2>Welcome to PGKhojo 🏠</h2>
+    <p>From one home to another ❤️</p>
+
+    <input type="text" id="username" placeholder="Enter Name">
+    <input type="email" id="email" placeholder="Enter Email">
+
+    <button onclick="loginUser()">Login</button>
+    <button onclick="continueGuest()" class="guest">Continue as Guest</button>
+
+  </div>
+</div>
+
+<!-- CHATBOT -->
+<div class="chatbot">
+  <button onclick="toggleChat()">💬</button>
+  <div id="chatBox">
+    <p>Hi 👋 Ask me about PG</p>
+    <input id="chatInput">
+    <button onclick="sendMsg()">Send</button>
+    <div id="chatOutput"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>© 2026 PGKhojo | All Rights Reserved</p>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
 @@ -15,73 +15,86 @@
 <div class="navbar">
   <h2 class="logo">PGKhojo</h2>
