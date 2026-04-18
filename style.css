@@ -231,4 +231,42 @@ button:hover{
   .search-box input{
     width:90%;
   }
+} 
+/* DARK MODE FULL FIX */
+.dark{
+  background:#111;
+  color:white;
+}
+
+.dark .hero{
+  background:linear-gradient(135deg,#222,#444);
+}
+
+.dark .card{
+  background:#222;
+}
+
+.dark .navbar{
+  background:#000;
+}
+
+.dark input,
+.dark select{
+  background:#222;
+  color:white;
+}
+
+/* DETAILS PAGE */
+.details{
+  padding:20px;
+}
+
+.details img{
+  width:100%;
+  border-radius:10px;
+}
+
+/* MODAL FIX */
+.login-modal{
+  z-index:9999;
 }
