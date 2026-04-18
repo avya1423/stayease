@@ -1,4 +1,175 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+let finalData = pgData;
+
+// DISPLAY
+function display(data){
+  let html="";
+
+  data.forEach(pg=>{
+    html+=`
+    <div class="card">
+      <img src="${pg.image}">
+      <div class="content">
+        <h3>${pg.name}</h3>
+        <p>${pg.city}</p>
+        <p class="price">${pg.price}</p>
+
+        <button onclick="call('${pg.contact}')">📞 Call</button>
+        <button onclick="route('${pg.name}')">📍 Route</button>
+        <button onclick="fav('${pg.name}')">❤️</button>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById("results").innerHTML = html;
+}
+
+// ON LOAD (FINAL)
+window.onload = function(){
+
+  let user = localStorage.getItem("user");
+
+  // Loader hide
+  let loader = document.getElementById("loader");
+  if(loader) loader.style.display = "none";
+
+  if(user){
+    document.getElementById("loginModal").style.display="none";
+    document.getElementById("userName").innerText = "Hi, " + user;
+
+    display(pgData);
+  }
+};
+
+// PROFILE TOGGLE
+function toggleProfile(){
+  let menu = document.getElementById("profileMenu");
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+// LOGIN
+function loginUser(){
+
+  let name = document.getElementById("username").value;
+  let email = document.getElementById("email").value;
+
+  if(!name || !email){
+    alert("Fill details ❌");
+    return;
+  }
+
+  localStorage.setItem("user", name);
+
+  document.getElementById("loginModal").style.display="none";
+  document.getElementById("userName").innerText = "Hi, " + name;
+
+  display(pgData);
+
+  alert("Welcome " + name + " 🎉");
+}
+
+// GUEST LOGIN
+function continueGuest(){
+
+  localStorage.setItem("user", "Guest");
+
+  document.getElementById("loginModal").style.display="none";
+  document.getElementById("userName").innerText = "Hi, Guest";
+
+  display(pgData);
+}
+
+// LOGOUT
+function logout(){
+  localStorage.removeItem("user");
+  alert("Logged out 👋");
+  location.reload();
+}
+
+// SEARCH
+function searchPG(){
+  let val = document.getElementById("search").value.toLowerCase();
+
+  let filtered = finalData.filter(p =>
+    p.city.toLowerCase().includes(val) ||
+    p.name.toLowerCase().includes(val)
+  );
+
+  display(filtered);
+}
+
+// FILTER
+function filterCity(city){
+  if(city==="") display(finalData);
+  else display(finalData.filter(p=>p.city===city));
+}
+
+// CALL
+function call(num){
+  window.location.href="tel:"+num;
+}
+
+// ROUTE
+function route(name){
+  window.open(`https://www.google.com/maps/dir/?api=1&destination=${name}`);
+}
+
+// FAV SAVE
+function fav(name){
+  let favs = JSON.parse(localStorage.getItem("favPG")) || [];
+
+  if(!favs.includes(name)){
+    favs.push(name);
+    localStorage.setItem("favPG", JSON.stringify(favs));
+    alert("Saved ❤️");
+  }
+}
+
+// CHATBOT
+function toggleChat(){
+  let box = document.getElementById("chatBox");
+  box.style.display = box.style.display==="block"?"none":"block";
+}
+
+function sendMsg(){
+  let msg = document.getElementById("chatInput").value.toLowerCase();
+  let reply = "Try searching PG 😄";
+
+  if(msg.includes("bhopal")) reply="Bhopal me best PG available 👍";
+
+  document.getElementById("chatOutput").innerHTML += `<p>You: ${msg}</p>`;
+  document.getElementById("chatOutput").innerHTML += `<p>Bot: ${reply}</p>`;
+}
+
+// DARK MODE
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+// PROFILE PIC LOAD
+window.addEventListener("load", function(){
+  let dp = localStorage.getItem("dp");
+  if(dp){
+    document.getElementById("profilePic").src = dp;
+  }
+});
+
+// CHANGE DP
+function changeDP(event){
+  let file = event.target.files[0];
+
+  let reader = new FileReader();
+
+  reader.onload = function(e){
+    let imgData = e.target.result;
+
+    document.getElementById("profilePic").src = imgData;
+
+    localStorage.setItem("dp", imgData);
+  };
+
+  reader.readAsDataURL(file);
+}
+(cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
 diff --git a/script.js b/script.js
 index 64fd3018eba0ef5173319dd80629b43bdb83860f..4456de41a02b1f8ff8188dc6e21a04639246a228 100644
 --- a/script.js
