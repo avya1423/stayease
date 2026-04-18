@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="style.css">
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 
@@ -32,8 +31,16 @@
     <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
 
     <div id="profileMenu" class="profile-menu">
+
       <p id="userName"></p>
-      <input type="file" onchange="changeDP(event)">
+
+      <!-- SETTINGS (ONLY LOGIN USER) -->
+      <div id="profileSettings">
+        <input type="text" id="newName" placeholder="Update Name">
+        <input type="file" onchange="changeDP(event)">
+        <button onclick="updateProfile()">Update Profile</button>
+      </div>
+
       <button onclick="logout()">Logout</button>
     </div>
   </div>
@@ -91,7 +98,13 @@
   <button onclick="toggleChat()">💬</button>
 
   <div id="chatBox">
-    <p>Hi 👋 Ask me about PG</p>
+    <p><b>PGKhojo Assistant 🤖</b></p>
+
+    <div class="chat-suggestions">
+      <button onclick="setQuickMsg('Bhopal PG')">Bhopal</button>
+      <button onclick="setQuickMsg('Delhi PG')">Delhi</button>
+      <button onclick="setQuickMsg('Price')">Price</button>
+    </div>
 
     <input id="chatInput" placeholder="Type your message..." onkeydown="chatOnEnter(event)">
     <button onclick="sendMsg()">Send</button>
