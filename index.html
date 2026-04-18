@@ -29,14 +29,11 @@
 
   <!-- PROFILE -->
   <div class="profile-container" onclick="toggleProfile()">
-    
     <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
 
     <div id="profileMenu" class="profile-menu">
       <p id="userName"></p>
-
       <input type="file" onchange="changeDP(event)">
-
       <button onclick="logout()">Logout</button>
     </div>
   </div>
@@ -44,12 +41,18 @@
 
 <!-- HERO -->
 <div class="hero">
-  <h1>Find Your Perfect Stay 🏠</h1>
-  <p>From One Home To Another💙</p>
+  <h1>PGKhojo 🏠</h1>
+  <p>From one home to another ❤️</p>
 
   <div class="search-box">
-    <input id="search" placeholder="Search city...">
+    <input id="search" placeholder="Search city or PG name..." onkeydown="searchOnEnter(event)">
     <button onclick="searchPG()">Search</button>
+  </div>
+
+  <div class="hero-stats">
+    <span>✅ Verified Listings</span>
+    <span>⚡ Fast Contact</span>
+    <span>📍 Easy Route</span>
   </div>
 
   <select onchange="filterCity(this.value)">
@@ -86,10 +89,13 @@
 <!-- CHATBOT -->
 <div class="chatbot">
   <button onclick="toggleChat()">💬</button>
+
   <div id="chatBox">
     <p>Hi 👋 Ask me about PG</p>
-    <input id="chatInput">
+
+    <input id="chatInput" placeholder="Type your message..." onkeydown="chatOnEnter(event)">
     <button onclick="sendMsg()">Send</button>
+
     <div id="chatOutput"></div>
   </div>
 </div>
@@ -104,96 +110,3 @@
 
 </body>
 </html>
-@@ -15,73 +15,86 @@
-<div class="navbar">
-  <h2 class="logo">PGKhojo</h2>
-
-  <div class="nav-links">
-    <a href="admin.html">Admin</a>
-    <a href="contact.html">Contact</a>
-    <a href="policy.html">Policy</a>
-  </div>
-
-  <!-- PROFILE -->
-  <div class="profile-container" onclick="toggleProfile()">
-    👤
-    <div id="profileMenu" class="profile-menu">
-      <p id="userName"></p>
-      <button onclick="logout()">Logout</button>
-    </div>
-  </div>
-</div>
-
-<!-- HERO -->
-<div class="hero">
-  <h1>Find Your Perfect Stay 🏠</h1>
-  <p>From One Home To Another💙</p>
-
-  <div class="search-box">
-    <input id="search" placeholder="Search city...">
-    <button onclick="searchPG()">Search</button>
-    <input id="search" placeholder="Search city or PG name..." onkeydown="searchOnEnter(event)">
-    <button class="btn-animated" onclick="searchPG()">Search Now</button>
-    <button class="btn-ghost" onclick="scrollToResults()">Browse PGs</button>
-  </div>
-
-  <div class="hero-stats">
-    <span>✅ Verified Listings</span>
-    <span>⚡ Fast Contact</span>
-    <span>📍 Easy Route</span>
-  </div>
-
-  <select onchange="filterCity(this.value)">
-    <option value="">All Cities</option>
-    <option>Bhopal</option>
-    <option>Delhi</option>
-    <option>Mumbai</option>
-    <option>Pune</option>
-  </select>
-</div>
-
-<!-- RESULTS -->
-<div id="results" class="grid"></div>
-
-<!-- CHAT -->
-<div class="chatbot">
-  <button onclick="toggleChat()">💬</button>
-  <button class="chat-toggle btn-animated" onclick="toggleChat()">💬 Chat</button>
-  <div id="chatBox">
-    <p>Hi 👋 Ask me about PG</p>
-    <input id="chatInput">
-    <button onclick="sendMsg()">Send</button>
-    <div class="chat-header">PGKhojo Assistant</div>
-    <p class="chat-welcome">Hi 👋 Ask me about PG, city, price, or contact.</p>
-    <div class="chat-suggestions">
-      <button onclick="setQuickMsg('Show Delhi PG')">Delhi</button>
-      <button onclick="setQuickMsg('PG price')">Price</button>
-      <button onclick="setQuickMsg('How to contact?')">Contact</button>
-    </div>
-    <input id="chatInput" placeholder="Type your message..." onkeydown="chatOnEnter(event)">
-    <button class="btn-animated" onclick="sendMsg()">Send</button>
-    <div id="chatOutput"></div>
-  </div>
-</div>
-
-<script src="data.js"></script>
-<script src="script.js"></script>
-  <!-- LOGIN MODAL -->
-<div id="loginModal" class="login-modal">
-  <div class="login-box">
-
-    <h2>PGKhojo 🏠</h2>
-    <p>From one home to another ❤️</p>
-
-    <input type="text" id="username" placeholder="Enter Name">
-    <input type="email" id="email" placeholder="Enter Email">
-
-    <button onclick="loginUser()">Login</button>
-    <button onclick="continueGuest()" class="guest">Continue as Guest</button>
-
-  </div>
-</div>
-<div class="footer">
-  
-  <p>© 2026 PGKhojo | All Rights Reserved</p>
-</div>
