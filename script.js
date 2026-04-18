@@ -45,6 +45,11 @@ window.onload = function(){
     document.getElementById("userName").innerText = "Hi, " + user;
     display(pgData);
   }
+
+  // PROFILE SETTINGS (Guest hide)
+  if(user === "Guest"){
+    document.getElementById("profileSettings").style.display="none";
+  }
 };
 
 // PROFILE TOGGLE
@@ -97,6 +102,18 @@ function logout(){
   location.reload();
 }
 
+// UPDATE PROFILE (NEW 🔥)
+function updateProfile(){
+
+  let newName = document.getElementById("newName").value;
+
+  if(newName){
+    localStorage.setItem("user", newName);
+    document.getElementById("userName").innerText = "Hi, " + newName;
+    alert("Profile Updated ✅");
+  }
+}
+
 // SEARCH
 function searchPG(){
   let val = document.getElementById("search").value.toLowerCase();
@@ -130,7 +147,7 @@ function route(name){
   window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(name)}`);
 }
 
-// FAV
+// FAV SAVE (UPGRADE 🔥)
 function fav(name){
   let favs = JSON.parse(localStorage.getItem("favPG")) || [];
 
@@ -138,6 +155,8 @@ function fav(name){
     favs.push(name);
     localStorage.setItem("favPG", JSON.stringify(favs));
     alert("Saved ❤️");
+  } else {
+    alert("Already saved 👍");
   }
 }
 
@@ -159,11 +178,23 @@ function sendMsg(){
   if(msg.includes("bhopal")) reply="Bhopal me best PG available 👍";
   else if(msg.includes("delhi")) reply="Delhi PG available 👍";
   else if(msg.includes("price")) reply="Price card me likha hota hai 💰";
+  else if(msg.includes("contact")) reply="📞 Call button use karo";
 
   output.innerHTML += `<p><b>You:</b> ${msg}</p>`;
   output.innerHTML += `<p><b>Bot:</b> ${reply}</p>`;
 
   input.value="";
+}
+
+// ENTER CHAT
+function chatOnEnter(e){
+  if(e.key==="Enter") sendMsg();
+}
+
+// QUICK CHAT BUTTONS
+function setQuickMsg(text){
+  document.getElementById("chatInput").value = text;
+  sendMsg();
 }
 
 // DARK MODE
