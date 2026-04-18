@@ -13,7 +13,7 @@ function display(data){
 
   data.forEach(pg=>{
     html+=`
-    <div class="card">
+    <div class="card" onclick='openDetails(${JSON.stringify(pg)})'>
       <img src="${pg.image}">
       <div class="content">
         <span class="tag">Popular</span>
@@ -21,9 +21,9 @@ function display(data){
         <p>${pg.city}</p>
         <p class="price">${pg.price}</p>
 
-        <button onclick="call('${pg.contact}')">📞 Call</button>
-        <button onclick="route('${pg.name}')">📍 Route</button>
-        <button onclick="fav('${pg.name}')">❤️ Save</button>
+        <button onclick="event.stopPropagation(); call('${pg.contact}')">📞 Call</button>
+        <button onclick="event.stopPropagation(); route('${pg.name}')">📍 Route</button>
+        <button onclick="event.stopPropagation(); fav('${pg.name}')">❤️ Save</button>
       </div>
     </div>`;
   });
@@ -31,12 +31,33 @@ function display(data){
   document.getElementById("results").innerHTML = html;
 }
 
+// FULL DETAILS PAGE 🔥
+function openDetails(pg){
+  document.getElementById("results").innerHTML = `
+    <div class="details">
+      <h2>${pg.name}</h2>
+      <img src="${pg.image}">
+      <p><b>City:</b> ${pg.city}</p>
+      <p><b>Price:</b> ${pg.price}</p>
+      <p><b>For:</b> ${pg.gender || "All"}</p>
+      <p><b>Contact:</b> ${pg.contact}</p>
+
+      <button onclick="call('${pg.contact}')">📞 Call</button>
+      <button onclick="route('${pg.name}')">📍 Route</button>
+      <button onclick="goBack()">⬅ Back</button>
+    </div>
+  `;
+}
+
+function goBack(){
+  display(finalData);
+}
+
 // ON LOAD
 window.onload = function(){
 
   let user = localStorage.getItem("user");
 
-  // loader hide
   let loader = document.getElementById("loader");
   if(loader) loader.style.display="none";
 
@@ -46,13 +67,12 @@ window.onload = function(){
     display(pgData);
   }
 
-  // PROFILE SETTINGS (Guest hide)
   if(user === "Guest"){
     document.getElementById("profileSettings").style.display="none";
   }
 };
 
-// PROFILE TOGGLE
+// PROFILE
 function toggleProfile(){
   let menu = document.getElementById("profileMenu");
   menu.style.display = (menu.style.display === "block") ? "none" : "block";
@@ -80,37 +100,30 @@ function loginUser(){
   document.getElementById("userName").innerText = "Hi, " + name;
 
   display(pgData);
-
-  alert("Welcome " + name + " 🎉");
 }
 
 // GUEST
 function continueGuest(){
-
   localStorage.setItem("user", "Guest");
-
   document.getElementById("loginModal").style.display="none";
   document.getElementById("userName").innerText = "Hi, Guest";
-
   display(pgData);
 }
 
 // LOGOUT
 function logout(){
   localStorage.removeItem("user");
-  alert("Logged out 👋");
   location.reload();
 }
 
-// UPDATE PROFILE (NEW 🔥)
+// UPDATE PROFILE
 function updateProfile(){
-
   let newName = document.getElementById("newName").value;
 
   if(newName){
     localStorage.setItem("user", newName);
     document.getElementById("userName").innerText = "Hi, " + newName;
-    alert("Profile Updated ✅");
+    alert("Updated ✅");
   }
 }
 
@@ -118,12 +131,12 @@ function updateProfile(){
 function searchPG(){
   let val = document.getElementById("search").value.toLowerCase();
 
-  let filtered = finalData.filter(p =>
+  finalData = pgData.filter(p =>
     p.city.toLowerCase().includes(val) ||
     p.name.toLowerCase().includes(val)
   );
 
-  display(filtered);
+  display(finalData);
 }
 
 // ENTER SEARCH
@@ -131,10 +144,24 @@ function searchOnEnter(e){
   if(e.key==="Enter") searchPG();
 }
 
-// FILTER
+// FILTER CITY
 function filterCity(city){
-  if(city==="") display(finalData);
-  else display(finalData.filter(p=>p.city===city));
+  if(city===""){
+    finalData = pgData;
+  } else {
+    finalData = pgData.filter(p=>p.city===city);
+  }
+  display(finalData);
+}
+
+// FILTER GENDER 🔥
+function filterGender(g){
+  if(g===""){
+    finalData = pgData;
+  } else {
+    finalData = pgData.filter(p=>p.gender===g);
+  }
+  display(finalData);
 }
 
 // CALL
@@ -147,7 +174,7 @@ function route(name){
   window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(name)}`);
 }
 
-// FAV SAVE (UPGRADE 🔥)
+// FAV
 function fav(name){
   let favs = JSON.parse(localStorage.getItem("favPG")) || [];
 
@@ -175,10 +202,9 @@ function sendMsg(){
 
   let reply = "Try searching PG 😄";
 
-  if(msg.includes("bhopal")) reply="Bhopal me best PG available 👍";
-  else if(msg.includes("delhi")) reply="Delhi PG available 👍";
+  if(msg.includes("bhopal")) reply="Bhopal me PG available 👍";
+  else if(msg.includes("patna")) reply="Patna me bhi PG available 👍";
   else if(msg.includes("price")) reply="Price card me likha hota hai 💰";
-  else if(msg.includes("contact")) reply="📞 Call button use karo";
 
   output.innerHTML += `<p><b>You:</b> ${msg}</p>`;
   output.innerHTML += `<p><b>Bot:</b> ${reply}</p>`;
@@ -189,12 +215,6 @@ function sendMsg(){
 // ENTER CHAT
 function chatOnEnter(e){
   if(e.key==="Enter") sendMsg();
-}
-
-// QUICK CHAT BUTTONS
-function setQuickMsg(text){
-  document.getElementById("chatInput").value = text;
-  sendMsg();
 }
 
 // DARK MODE
@@ -218,7 +238,6 @@ function changeDP(event){
 
   reader.onload = function(e){
     let imgData = e.target.result;
-
     document.getElementById("profilePic").src = imgData;
     localStorage.setItem("dp", imgData);
   };
