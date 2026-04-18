@@ -244,3 +244,38 @@ function changeDP(event){
 
   reader.readAsDataURL(file);
 }
+// ADD PG MODAL
+function openAddPG(){
+  document.getElementById("pgModal").style.display="flex";
+}
+
+function closeAddPG(){
+  document.getElementById("pgModal").style.display="none";
+}
+
+function addPG(){
+
+  let name = pgName.value;
+  let city = pgCity.value;
+  let contact = pgContact.value;
+
+  if(!name || !city){
+    alert("Fill all fields ❌");
+    return;
+  }
+
+  let newPG = {
+    name,
+    city,
+    price:"₹5000",
+    contact,
+    image:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+    gender:"Boys"
+  };
+
+  pgData.push(newPG);
+
+  alert("PG Added ✅");
+  closeAddPG();
+  display(pgData);
+}
