@@ -1,131 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>PGKhojo</title>
-
+<meta charset="UTF-8">
+<title>PGKhojo 🏠</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
 <!-- LOADER -->
 <div id="loader">
-  <h2>Loading...</h2>
+  <div class="loader-inner">
+    <span>🏠</span>
+    <p>PGKhojo</p>
+  </div>
 </div>
 
 <!-- NAVBAR -->
-<div class="navbar">
-  <h2 class="logo">PGKhojo</h2>
+<nav class="navbar">
+  <div class="logo">PG<span>Khojo</span></div>
 
-  <!-- ✅ FIXED NAVBAR LINKS -->
   <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="contact.html">Contact</a>
     <a href="policy.html">Policy</a>
   </div>
 
-  <!-- PROFILE -->
-  <div class="profile-container" onclick="toggleProfile()">
-    <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-
-    <div id="profileMenu" class="profile-menu">
-      <p id="userName"></p>
-
-      <div id="profileSettings">
-        <input type="text" id="newName" placeholder="Update Name">
-        <input type="file" onchange="changeDP(event)">
-        <button onclick="updateProfile()">Update Profile</button>
+  <div class="nav-right">
+    <button class="dark-btn" onclick="toggleDark()">🌙</button>
+    <div class="profile-container" onclick="toggleProfile()">
+      <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+      <div id="profileMenu" class="profile-menu">
+        <p id="userName"></p>
+        <div id="profileSettings">
+          <input type="text" id="newName" placeholder="Update Name">
+          <label class="file-label">📷 Change Photo
+            <input type="file" onchange="changeDP(event)" style="display:none">
+          </label>
+          <button onclick="updateProfile()">✅ Save</button>
+        </div>
+        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
       </div>
-
-      <button onclick="logout()">Logout</button>
     </div>
   </div>
-</div>
+</nav>
 
 <!-- HERO -->
 <div class="hero">
-  <h1>PGKhojo 🏠</h1>
-  <p>From one home to another ❤️</p>
+  <div class="hero-badge">🏠 India's Student PG Finder</div>
+  <h1>Find Your <span>Perfect PG</span><br>Anywhere in India</h1>
+  <p class="hero-sub">From one home to another ❤️</p>
 
-  <div class="search-box">
-    <input id="search" placeholder="Search..." onkeydown="searchOnEnter(event)">
-    <button onclick="searchPG()">Search</button>
+  <div class="search-wrap">
+    <div class="search-box">
+      <span>🔍</span>
+      <input id="search" placeholder="Search by city or PG name..." onkeydown="searchOnEnter(event)">
+      <button onclick="searchPG()">Search</button>
+    </div>
   </div>
 
-  <select onchange="filterCity(this.value)">
-    <option value="">All Cities</option>
-    <option>Bhopal</option>
-    <option>Delhi</option>
-    <option>Mumbai</option>
-    <option>Pune</option>
-    <option>Patna</option>
-  </select>
+  <div class="filter-row">
+    <select onchange="filterCity(this.value)">
+      <option value="">🏙️ All Cities</option>
+      <option>Bhopal</option>
+      <option>Delhi</option>
+      <option>Mumbai</option>
+      <option>Pune</option>
+      <option>Patna</option>
+      <option>Bangalore</option>
+      <option>Hyderabad</option>
+      <option>Chennai</option>
+      <option>Kolkata</option>
+    </select>
 
-  <select onchange="filterGender(this.value)">
-    <option value="">All</option>
-    <option>Boys</option>
-    <option>Girls</option>
-  </select>
+    <select onchange="filterGender(this.value)">
+      <option value="">👥 All</option>
+      <option>Boys</option>
+      <option>Girls</option>
+    </select>
 
-  <br><br>
-  <button onclick="toggleDark()">🌙 Dark Mode</button>
+    <select onchange="filterPrice(this.value)">
+      <option value="">💰 Any Price</option>
+      <option value="5000">Under ₹5000</option>
+      <option value="7000">Under ₹7000</option>
+      <option value="10000">Under ₹10000</option>
+      <option value="99999">₹10000+</option>
+    </select>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat"><strong id="totalCount">0</strong><span>PGs Listed</span></div>
+  <div class="stat"><strong>9</strong><span>Cities</span></div>
+  <div class="stat"><strong>⭐ 4.5</strong><span>Avg Rating</span></div>
+  <div class="stat"><strong>Free</strong><span>Listing</span></div>
 </div>
 
 <!-- ADD PG BUTTON -->
-<div style="text-align:center; margin:20px;">
+<div class="add-pg-bar">
+  <p>Own a PG? List it for free!</p>
   <button onclick="openAddPG()">➕ Add Your PG</button>
-</div>
-
-<!-- ADD PG MODAL -->
-<div id="pgModal" class="login-modal" style="display:none;">
-  <div class="login-box">
-    <h3>Add Your PG</h3>
-
-    <input id="pgName" placeholder="PG Name">
-    <input id="pgCity" placeholder="City">
-    <input id="pgContact" placeholder="Phone">
-    <input id="pgEmail" placeholder="Email">
-
-    <button onclick="addPG()">Submit</button>
-    <button onclick="closeAddPG()">Cancel</button>
-  </div>
 </div>
 
 <!-- RESULTS -->
 <div id="results" class="grid"></div>
 
-<!-- LOGIN -->
-<div id="loginModal" class="login-modal">
-  <div class="login-box">
-    <h2>Welcome 🏠</h2>
+<!-- ADD PG MODAL -->
+<div id="pgModal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <h3>➕ List Your PG</h3>
+    <input id="pgName" placeholder="PG Name *">
+    <input id="pgCity" placeholder="City *">
+    <input id="pgContact" placeholder="Phone Number *">
+    <input id="pgEmail" placeholder="Email">
+    <input id="pgPrice" placeholder="Monthly Rent (e.g. 6000)">
+    <select id="pgGender">
+      <option value="Boys">Boys</option>
+      <option value="Girls">Girls</option>
+      <option value="Both">Both</option>
+    </select>
+    <input id="pgAddress" placeholder="Full Address">
+    <div class="modal-btns">
+      <button onclick="addPG()">✅ Submit</button>
+      <button class="cancel-btn" onclick="closeAddPG()">✖ Cancel</button>
+    </div>
+  </div>
+</div>
 
-    <input id="username" placeholder="Name">
-    <input id="email" placeholder="Email">
+<!-- DETAILS MODAL -->
+<div id="detailModal" class="modal-overlay" style="display:none;">
+  <div class="modal-box detail-box">
+    <div id="detailContent"></div>
+    <button class="cancel-btn" onclick="closeDetail()" style="margin-top:10px;">✖ Close</button>
+  </div>
+</div>
 
-    <button onclick="loginUser()">Login</button>
-    <button onclick="continueGuest()">Guest</button>
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal-overlay">
+  <div class="modal-box login-box-inner">
+    <div class="login-logo">🏠</div>
+    <h2>Welcome to PGKhojo</h2>
+    <p class="login-sub">Find your perfect PG in seconds</p>
+    <input id="username" placeholder="Your Name">
+    <input id="email" placeholder="Your Email">
+    <button onclick="loginUser()">🚀 Get Started</button>
+    <button class="guest-btn" onclick="continueGuest()">👤 Continue as Guest</button>
   </div>
 </div>
 
 <!-- FOOTER -->
-<div class="footer">
-  <p>
-    <a href="index.html">Home</a> |
-    <a href="contact.html">Contact Us</a> |
-    <a href="about.html">About</a> |
-    <a href="policy.html">Policy</a>
-  </p>
-
-  <p>Available: Bhopal, Delhi, Mumbai, Pune, Patna</p>
-
-  <p>© 2026 PGKhojo</p>
-</div>
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">PG<span>Khojo</span></div>
+      <p>From one home to another ❤️</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="contact.html">Contact</a>
+      <a href="about.html">About</a>
+      <a href="policy.html">Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Available: Bhopal • Delhi • Mumbai • Pune • Patna • Bangalore • Hyderabad • Chennai • Kolkata</p>
+    <p>© 2026 PGKhojo — Made with ❤️ for Students</p>
+  </div>
+</footer>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
