@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — SheherSaathi</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero{background:linear-gradient(145deg,#e8460a,#b83208,#7c1c04);color:#fff;padding:50px 20px 70px;text-align:center;position:relative;}
+.page-hero h1{font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,42px);font-weight:800;margin-bottom:8px;}
+.page-hero p{font-size:15px;opacity:.85;}
+.page-wave{position:absolute;bottom:0;left:0;right:0;line-height:0;}
+.page-wave svg{width:100%;height:36px;display:block;}
+.page-content{max-width:700px;margin:0 auto;padding:32px 16px 60px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;}
+@media(max-width:500px){.contact-grid{grid-template-columns:1fr;}}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;text-align:center;}
+.cc-icon{font-size:32px;margin-bottom:10px;}
+.cc-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px;}
+.cc-val{font-size:13px;color:var(--muted);margin-bottom:14px;}
+a.cc-btn{display:inline-block;padding:8px 20px;background:linear-gradient(135deg,#e8460a,#b83208);color:#fff;border-radius:20px;font-size:13px;text-decoration:none;}
+.form-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+.form-box h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:18px;}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:500px){.cf-row{grid-template-columns:1fr;}}
+.cf-input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:10px;background:var(--input);color:var(--text);font-size:14px;outline:none;font-family:'DM Sans',sans-serif;margin-bottom:12px;display:block;transition:border-color .2s;}
+.cf-input:focus{border-color:#e8460a;}
+textarea.cf-input{resize:vertical;min-height:110px;}
+.info-banner{background:#fff3ee;border:1px solid rgba(232,70,10,.15);border-radius:var(--radius);padding:16px 20px;font-size:14px;color:var(--muted);text-align:center;}
+.dark .info-banner{background:#271500;}
+.info-banner strong{color:#e8460a;}
+.footer{background:#1a1714;color:#9a9490;padding:28px 20px 16px;}
+.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:16px;}
+.footer-brand .logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap;align-items:center;}
+.footer-links a{color:#9a9490;text-decoration:none;font-size:14px;}
+.footer-links a:hover{color:#e8460a;}
+.footer-bottom{border-top:1px solid #252118;padding-top:12px;font-size:12px;}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand" style="text-decoration:none">
+    <span>🏙️</span>
+    <span class="brand-text">Sheher<span>Saathi</span></span>
+  </a>
+  <div class="nav-right">
+    <button class="icon-btn" onclick="toggleDark()">🌙</button>
+    <a href="index.html"><button style="padding:8px 16px;font-size:13px">🏠 Home</button></a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-badge">📞 Hum Yahan Hain</div>
+  <h1>Contact Us</h1>
+  <p>Koi bhi sawaal ho — hum reply karenge!</p>
+  <div class="page-wave">
+    <svg viewBox="0 0 1440 50" preserveAspectRatio="none"><path d="M0,25 C480,55 960,0 1440,25 L1440,50 L0,50Z" fill="var(--bg)"/></svg>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="cc-icon">📧</div>
+      <div class="cc-title">Email Karo</div>
+      <div class="cc-val">supportpgkhojo@gmail.com</div>
+      <a href="mailto:supportpgkhojo@gmail.com" class="cc-btn">Send Email</a>
+    </div>
+    <div class="contact-card">
+      <div class="cc-icon">📞</div>
+      <div class="cc-title">Call Karo</div>
+      <div class="cc-val">+91 9534196255</div>
+      <a href="tel:9534196255" class="cc-btn">Call Now</a>
+    </div>
+    <div class="contact-card">
+      <div class="cc-icon">💬</div>
+      <div class="cc-title">WhatsApp</div>
+      <div class="cc-val">+91 9534196255</div>
+      <a href="https://wa.me/919534196255" target="_blank" class="cc-btn">WhatsApp</a>
+    </div>
+    <div class="contact-card">
+      <div class="cc-icon">📍</div>
+      <div class="cc-title">Location</div>
+      <div class="cc-val">Bhopal, Madhya Pradesh</div>
+      <a href="https://maps.google.com/?q=Bhopal,MP" target="_blank" class="cc-btn">View Map</a>
+    </div>
+  </div>
+
+  <div class="form-box">
+    <h3>✉️ Message Bhejo</h3>
+    <div class="cf-row">
+      <input class="cf-input" placeholder="Tumhara naam *" id="cfName">
+      <input class="cf-input" placeholder="Email *" id="cfEmail" type="email">
+    </div>
+    <input class="cf-input" placeholder="Subject" id="cfSubject">
+    <textarea class="cf-input" placeholder="Apna message likhein..." id="cfMsg"></textarea>
+    <button style="width:100%;padding:13px;font-size:15px" onclick="sendMsg()">🚀 Send Message</button>
+  </div>
+
+  <div class="info-banner">
+    ⏱️ Hum usually <strong>2-4 ghante</strong> mein reply karte hain.<br>
+    PG listing ke liye <strong>WhatsApp</strong> karo — Free listing hai!
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">Sheher<span style="color:#e8460a">Saathi</span></div>
+      <p style="font-size:13px;margin-top:4px">Naye sheher mein apna dost ❤️</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="contact.html">Contact</a>
+      <a href="policy.html">Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 SheherSaathi — Made with ❤️ for Students</p></div>
+</footer>
+
+<script>
+if(localStorage.getItem('ss_dark')==='1') document.body.classList.add('dark');
+function toggleDark(){ document.body.classList.toggle('dark'); localStorage.setItem('ss_dark',document.body.classList.contains('dark')?'1':'0'); }
+function sendMsg(){
+  const n=document.getElementById('cfName').value.trim();
+  const e=document.getElementById('cfEmail').value.trim();
+  const m=document.getElementById('cfMsg').value.trim();
+  if(!n||!e||!m){alert('Required fields bhar do ❌');return;}
+  alert('Message send ho gaya ✅\nHum jald reply karenge!');
+  ['cfName','cfEmail','cfSubject','cfMsg'].forEach(id=>document.getElementById(id).value='');
+}
+</script>
+</body>
+</html>
