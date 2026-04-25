@@ -171,22 +171,32 @@ const cityData = {
 //  INIT
 // ============================================================
 window.onload = function () {
+  // Hide loader
   setTimeout(() => {
     const l = document.getElementById('loader');
     l.style.opacity = '0';
     setTimeout(() => l.style.display = 'none', 500);
   }, 1500);
 
+  // Dark mode
   if (localStorage.getItem('ss_dark') === '1') document.body.classList.add('dark');
+
+  // Profile pic
   const dp = localStorage.getItem('ss_dp');
   if (dp) document.getElementById('profilePic').src = dp;
 
+  // Login check
   const user = localStorage.getItem('ss_user');
   if (user) {
     document.getElementById('loginModal').style.display = 'none';
     document.getElementById('greetUser').textContent = 'Hi, ' + user;
     if (user === 'Guest') document.getElementById('profileEditArea').style.display = 'none';
+  } else {
+    // Show login modal
+    document.getElementById('loginModal').style.display = 'flex';
   }
+
+  // Always load city data regardless of login
   loadCity('Bhopal');
 };
 
@@ -459,6 +469,7 @@ function doLogin() {
   localStorage.setItem('ss_user', name);
   document.getElementById('loginModal').style.display = 'none';
   document.getElementById('greetUser').textContent = 'Hi, '+name;
+  loadCity(activeCity);
 }
 
 function doGuest() {
@@ -466,6 +477,7 @@ function doGuest() {
   document.getElementById('loginModal').style.display = 'none';
   document.getElementById('greetUser').textContent = 'Hi, Guest';
   document.getElementById('profileEditArea').style.display = 'none';
+  loadCity(activeCity);
 }
 
 function logout() { localStorage.removeItem('ss_user'); location.reload(); }
