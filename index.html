@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SheherSaathi 🏠</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SheherSaathi 🏙️ — Naye Sheher Mein Apna Dost</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -11,34 +11,32 @@
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="loader-inner">
-    <span>🏠</span>
-    <p>PGKhojo</p>
+  <div class="loader-box">
+    <div class="loader-icon">🏙️</div>
+    <div class="loader-name">SheherSaathi</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <div class="loader-tagline">Naye sheher mein apna dost...</div>
   </div>
 </div>
 
 <!-- NAVBAR -->
 <nav class="navbar">
-  <div class="logo">PG<span>Khojo</span></div>
-
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="contact.html">Contact</a>
-    <a href="policy.html">Policy</a>
+  <div class="nav-brand">
+    <span>🏙️</span>
+    <span class="brand-text">Sheher<span>Saathi</span></span>
   </div>
-
   <div class="nav-right">
-    <button class="dark-btn" onclick="toggleDark()">🌙</button>
-    <div class="profile-container" onclick="toggleProfile()">
-      <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+    <button class="icon-btn" onclick="toggleDark()">🌙</button>
+    <div class="profile-wrap" onclick="toggleProfileMenu()">
+      <img id="profilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-pic" alt="Profile">
       <div id="profileMenu" class="profile-menu">
-        <p id="userName"></p>
-        <div id="profileSettings">
-          <input type="text" id="newName" placeholder="Update Name">
-          <label class="file-label">📷 Change Photo
-            <input type="file" onchange="changeDP(event)" style="display:none">
+        <p id="greetUser" class="greet-text"></p>
+        <div id="profileEditArea">
+          <input type="text" id="newName" placeholder="Update your name">
+          <label class="file-upload-label">📷 Change Photo
+            <input type="file" accept="image/*" onchange="changeDP(event)">
           </label>
-          <button onclick="updateProfile()">✅ Save</button>
+          <button onclick="saveProfile()">✅ Save</button>
         </div>
         <button class="logout-btn" onclick="logout()">🚪 Logout</button>
       </div>
@@ -46,129 +44,239 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">🏠 India's Student PG Finder</div>
-  <h1>Find Your <span>Perfect PG</span><br>Anywhere in India</h1>
-  <p class="hero-sub">From one home to another ❤️</p>
+<!-- HERO SECTION -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🇮🇳 India's City Companion App</div>
+    <h1>Naye Sheher Mein<br><em>Akele Nahi Ho</em></h1>
+    <p class="hero-sub">PG dhundo · Fare jaano · Guide lo · Helpline pao</p>
 
-  <div class="search-wrap">
-    <div class="search-box">
-      <span>🔍</span>
-      <input id="search" placeholder="Search by city or PG name..." onkeydown="searchOnEnter(event)">
-      <button onclick="searchPG()">Search</button>
+    <div class="city-selector">
+      <button class="city-btn active" onclick="switchCity('Bhopal', this)">🏛️ Bhopal</button>
+      <button class="city-btn" onclick="switchCity('Delhi', this)">🗼 Delhi</button>
+      <button class="city-btn" onclick="switchCity('Mumbai', this)">🌆 Mumbai</button>
+      <button class="city-btn" onclick="switchCity('Pune', this)">🎓 Pune</button>
+      <button class="city-btn" onclick="switchCity('Patna', this)">🏞️ Patna</button>
+    </div>
+    <p class="hero-city-note">Abhi dekh rahe ho: <strong id="activeCityText">Bhopal</strong></p>
+  </div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 50" preserveAspectRatio="none"><path d="M0,25 C480,55 960,0 1440,25 L1440,50 L0,50Z" fill="var(--bg)"/></svg>
+  </div>
+</header>
+
+<!-- TAB NAV -->
+<div class="tab-nav-wrap">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('pg', this)">🏠 PG Finder</button>
+    <button class="tab-btn" onclick="switchTab('fare', this)">🚗 Fare Calc</button>
+    <button class="tab-btn" onclick="switchTab('guide', this)">🗺️ City Guide</button>
+    <button class="tab-btn" onclick="switchTab('helpline', this)">📞 Helplines</button>
+    <button class="tab-btn" onclick="switchTab('nearby', this)">📍 Nearby</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ===== PG FINDER ===== -->
+  <div id="tab-pg" class="tab-panel active">
+    <div class="panel-header">
+      <div>
+        <h2 id="pg-heading">Bhopal ke PGs</h2>
+        <p id="pg-count" class="panel-sub"></p>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <input id="pgSearch" class="search-box" placeholder="🔍 PG naam se search karo..." onkeyup="renderPGs()">
+      <select id="pgGender" class="sel" onchange="renderPGs()">
+        <option value="">👥 All</option>
+        <option value="Boys">👦 Boys</option>
+        <option value="Girls">👧 Girls</option>
+      </select>
+      <select id="pgPrice" class="sel" onchange="renderPGs()">
+        <option value="">💰 Any Price</option>
+        <option value="5000">Under ₹5,000</option>
+        <option value="7000">Under ₹7,000</option>
+        <option value="10000">Under ₹10,000</option>
+      </select>
+    </div>
+
+    <div id="pgGrid" class="pg-grid"></div>
+
+    <div class="list-pg-banner">
+      <div class="list-pg-text">
+        <strong>Apna PG list karo — Bilkul Free!</strong>
+        <span>Hazaron students tak pahuncho</span>
+      </div>
+      <button onclick="openModal('addPGModal')">➕ Add Your PG</button>
     </div>
   </div>
 
-  <div class="filter-row">
-    <select onchange="filterCity(this.value)">
-      <option value="">🏙️ All Cities</option>
-      <option>Bhopal</option>
-      <option>Delhi</option>
-      <option>Mumbai</option>
-      <option>Pune</option>
-      <option>Patna</option>
-      <option>Bangalore</option>
-      <option>Hyderabad</option>
-      <option>Chennai</option>
-      <option>Kolkata</option>
-    </select>
+  <!-- ===== FARE CALCULATOR ===== -->
+  <div id="tab-fare" class="tab-panel">
+    <div class="panel-header">
+      <div>
+        <h2 id="fare-heading">Fare Calculator</h2>
+        <p id="fare-sub" class="panel-sub">Station/Bus Stand se kisi bhi jagah ka fare jaano</p>
+      </div>
+    </div>
 
-    <select onchange="filterGender(this.value)">
-      <option value="">👥 All</option>
-      <option>Boys</option>
-      <option>Girls</option>
-    </select>
+    <div class="fare-layout">
+      <div class="fare-left">
+        <div class="fare-box">
+          <label class="lbl">Kahan se aa rahe ho?</label>
+          <select id="fareFrom" class="sel full" onchange="calcFare()"><option value="">-- Source chunein --</option></select>
+          <label class="lbl" style="margin-top:14px">Kahan jaana hai?</label>
+          <select id="fareTo" class="sel full" onchange="calcFare()"><option value="">-- Destination chunein --</option></select>
 
-    <select onchange="filterPrice(this.value)">
-      <option value="">💰 Any Price</option>
-      <option value="5000">Under ₹5000</option>
-      <option value="7000">Under ₹7000</option>
-      <option value="10000">Under ₹10000</option>
-      <option value="99999">₹10000+</option>
-    </select>
+          <div id="fareResult" style="display:none; margin-top:18px;">
+            <div class="fare-meta">
+              <span class="fare-badge" id="f-dist"></span>
+              <span class="fare-badge muted" id="f-time"></span>
+            </div>
+            <div class="fare-cards">
+              <div class="fare-card-item">
+                <div class="fc-icon">🛺</div>
+                <div class="fc-label">Auto</div>
+                <div class="fc-price" id="f-auto"></div>
+              </div>
+              <div class="fare-card-item best">
+                <div class="fc-best-tag">Best</div>
+                <div class="fc-icon">🚕</div>
+                <div class="fc-label">Cab</div>
+                <div class="fc-price" id="f-cab"></div>
+              </div>
+              <div class="fare-card-item">
+                <div class="fc-icon">🛵</div>
+                <div class="fc-label">Bike Taxi</div>
+                <div class="fc-price" id="f-bike"></div>
+              </div>
+              <div class="fare-card-item">
+                <div class="fc-icon">⚡</div>
+                <div class="fc-label">E-Rick</div>
+                <div class="fc-price" id="f-erick"></div>
+              </div>
+            </div>
+            <div class="fare-note" id="f-note"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fare-right">
+        <div class="tips-box">
+          <h4>💡 Smart Tips</h4>
+          <div class="tip-row">🔖 Auto mein pehle bhav fix karo — meter nahi chalte</div>
+          <div class="tip-row">📱 Ola/Uber app se book karo — transparent fare</div>
+          <div class="tip-row">🌙 Raat mein akele auto se bachein</div>
+          <div class="tip-row">🎫 Station pe Prepaid Auto Booth se lo</div>
+          <div class="tip-row">💳 UPI se pay karo — chhutte ki tension nahi</div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat"><strong id="totalCount">0</strong><span>PGs Listed</span></div>
-  <div class="stat"><strong>9</strong><span>Cities</span></div>
-  <div class="stat"><strong>⭐ 4.5</strong><span>Avg Rating</span></div>
-  <div class="stat"><strong>Free</strong><span>Listing</span></div>
-</div>
+  <!-- ===== CITY GUIDE ===== -->
+  <div id="tab-guide" class="tab-panel">
+    <div class="panel-header">
+      <div>
+        <h2 id="guide-heading">City Guide</h2>
+        <p class="panel-sub">Station pe utre ho? Step by step guide hai yahan</p>
+      </div>
+    </div>
+    <div id="guideSteps" class="guide-wrap"></div>
+  </div>
 
-<!-- ADD PG BUTTON -->
-<div class="add-pg-bar">
-  <p>Own a PG? List it for free!</p>
-  <button onclick="openAddPG()">➕ Add Your PG</button>
-</div>
+  <!-- ===== HELPLINES ===== -->
+  <div id="tab-helpline" class="tab-panel">
+    <div class="panel-header">
+      <div>
+        <h2>Emergency Helplines</h2>
+        <p class="panel-sub">Ye numbers abhi save kar lo — kabhi bhi kaam aa sakte hain</p>
+      </div>
+    </div>
 
-<!-- RESULTS -->
-<div id="results" class="grid"></div>
+    <div class="sos-grid">
+      <div class="sos-card"><div class="sos-num">100</div><div class="sos-name">Police</div><a href="tel:100" class="sos-btn">Call</a></div>
+      <div class="sos-card"><div class="sos-num">108</div><div class="sos-name">Ambulance</div><a href="tel:108" class="sos-btn">Call</a></div>
+      <div class="sos-card"><div class="sos-num">101</div><div class="sos-name">Fire</div><a href="tel:101" class="sos-btn">Call</a></div>
+      <div class="sos-card"><div class="sos-num">112</div><div class="sos-name">Emergency</div><a href="tel:112" class="sos-btn">Call</a></div>
+    </div>
+
+    <h3 class="sub-heading" style="margin: 20px 0 12px">Other Important Numbers</h3>
+    <div id="helplineItems" class="helpline-list"></div>
+  </div>
+
+  <!-- ===== NEARBY ===== -->
+  <div id="tab-nearby" class="tab-panel">
+    <div class="panel-header">
+      <div>
+        <h2 id="nearby-heading">Nearby Places</h2>
+        <p class="panel-sub" id="nearby-sub">Bhopal ke important places</p>
+      </div>
+    </div>
+    <div class="nearby-cats">
+      <button class="cat-btn active" onclick="showCategory('hospital', this)">🏥 Hospital</button>
+      <button class="cat-btn" onclick="showCategory('police', this)">🚔 Police</button>
+      <button class="cat-btn" onclick="showCategory('atm', this)">🏧 ATM</button>
+      <button class="cat-btn" onclick="showCategory('food', this)">🍽️ Food</button>
+      <button class="cat-btn" onclick="showCategory('transport', this)">🚌 Transport</button>
+    </div>
+    <div id="nearbyItems" class="nearby-list"></div>
+  </div>
+
+</main>
 
 <!-- ADD PG MODAL -->
-<div id="pgModal" class="modal-overlay" style="display:none;">
-  <div class="modal-box">
-    <h3>➕ List Your PG</h3>
-    <input id="pgName" placeholder="PG Name *">
-    <input id="pgCity" placeholder="City *">
-    <input id="pgContact" placeholder="Phone Number *">
-    <input id="pgEmail" placeholder="Email">
-    <input id="pgPrice" placeholder="Monthly Rent (e.g. 6000)">
-    <select id="pgGender">
-      <option value="Boys">Boys</option>
-      <option value="Girls">Girls</option>
-      <option value="Both">Both</option>
+<div id="addPGModal" class="overlay hidden">
+  <div class="modal">
+    <div class="modal-top">
+      <h3>➕ List Your PG</h3>
+      <button class="close-btn" onclick="closeModal('addPGModal')">✕</button>
+    </div>
+    <input id="newPGName" class="m-input" placeholder="PG Name *">
+    <select id="newPGCity" class="m-input">
+      <option>Bhopal</option><option>Delhi</option><option>Mumbai</option><option>Pune</option><option>Patna</option>
     </select>
-    <input id="pgAddress" placeholder="Full Address">
+    <input id="newPGPrice" class="m-input" type="number" placeholder="Monthly Rent e.g. 6000 *">
+    <select id="newPGGender" class="m-input">
+      <option value="Boys">👦 Boys</option>
+      <option value="Girls">👧 Girls</option>
+      <option value="Both">👥 Both</option>
+    </select>
+    <input id="newPGContact" class="m-input" type="tel" placeholder="Phone Number *">
+    <input id="newPGAddress" class="m-input" placeholder="Full Address (optional)">
     <div class="modal-btns">
-      <button onclick="addPG()">✅ Submit</button>
-      <button class="cancel-btn" onclick="closeAddPG()">✖ Cancel</button>
+      <button onclick="addNewPG()">✅ Submit</button>
+      <button class="btn-ghost" onclick="closeModal('addPGModal')">Cancel</button>
     </div>
   </div>
 </div>
 
-<!-- DETAILS MODAL -->
-<div id="detailModal" class="modal-overlay" style="display:none;">
-  <div class="modal-box detail-box">
-    <div id="detailContent"></div>
-    <button class="cancel-btn" onclick="closeDetail()" style="margin-top:10px;">✖ Close</button>
+<!-- PG DETAIL MODAL -->
+<div id="pgDetailModal" class="overlay hidden">
+  <div class="modal">
+    <div class="modal-top">
+      <h3>PG Details</h3>
+      <button class="close-btn" onclick="closeModal('pgDetailModal')">✕</button>
+    </div>
+    <div id="pgDetailBody"></div>
   </div>
 </div>
 
 <!-- LOGIN MODAL -->
-<div id="loginModal" class="modal-overlay">
-  <div class="modal-box login-box-inner">
-    <div class="login-logo">🏠</div>
-    <h2>Welcome to PGKhojo</h2>
-    <p class="login-sub">Find your perfect PG in seconds</p>
-    <input id="username" placeholder="Your Name">
-    <input id="email" placeholder="Your Email">
-    <button onclick="loginUser()">🚀 Get Started</button>
-    <button class="guest-btn" onclick="continueGuest()">👤 Continue as Guest</button>
+<div id="loginModal" class="overlay">
+  <div class="modal login-modal">
+    <div class="login-icon">🏙️</div>
+    <h2 class="login-title">SheherSaathi</h2>
+    <p class="login-sub">Naye sheher mein apna dost ❤️</p>
+    <input id="loginName" class="m-input" placeholder="Tumhara naam *">
+    <input id="loginEmail" class="m-input" type="email" placeholder="Email address *">
+    <button onclick="doLogin()" class="btn-full">🚀 Start Exploring</button>
+    <button onclick="doGuest()" class="btn-full btn-ghost" style="margin-top:8px">👤 Guest ke taur pe chalao</button>
   </div>
 </div>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="logo">PG<span>Khojo</span></div>
-      <p>From one home to another ❤️</p>
-    </div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="contact.html">Contact</a>
-      <a href="about.html">About</a>
-      <a href="policy.html">Policy</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>Available: Bhopal • Delhi • Mumbai • Pune • Patna • Bangalore • Hyderabad • Chennai • Kolkata</p>
-    <p>© 2026 PGKhojo — Made with ❤️ for Students</p>
-  </div>
-</footer>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
