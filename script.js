@@ -277,6 +277,13 @@ window.onload = function(){
 
   loadCity('Bhopal');
   renderNotifs();
+
+  // Init new features
+  setTimeout(() => {
+    renderChecklist();
+    renderCompare();
+    setBudgetCity('Bhopal', document.querySelector('.cbs'));
+  }, 500);
 };
 
 // =====================================================
@@ -977,21 +984,7 @@ function calcBudget() {
     <div class="avg-row" style="border-top:2px solid var(--border);padding-top:10px;margin-top:4px"><span style="font-weight:700">Total Average</span><span style="font-weight:700;color:var(--brand)">₹${Object.values(avg).reduce((a,b)=>a+b,0).toLocaleString()}</span></div>`;
 }
 
-// Init budget sliders
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const avg = cityAvgCost['Bhopal'];
-    if (document.getElementById('bPG')) {
-      document.getElementById('bPG').value       = avg.pg;
-      document.getElementById('bFood').value     = avg.food;
-      document.getElementById('bTransport').value = avg.transport;
-      document.getElementById('bInternet').value = avg.internet;
-      document.getElementById('bEntertain').value = avg.entertain;
-      document.getElementById('bMisc').value     = avg.misc;
-      calcBudget();
-    }
-  }, 2000);
-});
+// Budget initialized in main onload
 
 // =====================================================
 //  CHECKLIST
@@ -1208,17 +1201,8 @@ function hideAITyping() {
 }
 
 // =====================================================
-//  INIT NEW FEATURES
+//  INIT NEW FEATURES — handled in main window.onload
 // =====================================================
-const _origOnload = window.onload;
-window.onload = function() {
-  if (_origOnload) _origOnload();
-  setTimeout(() => {
-    renderChecklist();
-    renderCompare();
-    calcBudget();
-  }, 1800);
-};
 
 // Close compare dropdown on outside click
 document.addEventListener('click', e => {
