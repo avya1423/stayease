@@ -784,3 +784,446 @@ document.addEventListener('click',e=>{
   if(!e.target.closest('.profile-wrap')){ const m=document.getElementById('profileMenu'); if(m) m.style.display='none'; }
   if(!e.target.closest('.notif-btn')&&!e.target.closest('.notif-panel')){ const p=document.getElementById('notifPanel'); if(p) p.classList.add('hidden'); }
 });
+
+// =====================================================
+//  COMPARE PGs
+// =====================================================
+let compareList = [];
+
+function searchCompare(val) {
+  const dd = document.getElementById('compareDropdown');
+  if (!val.trim()) { dd.classList.add('hidden'); return; }
+  const results = pgData.filter(p =>
+    p.city === activeCity &&
+    p.name.toLowerCase().includes(val.toLowerCase()) &&
+    !compareList.find(c => c.name === p.name)
+  ).slice(0, 6);
+  if (!results.length) { dd.classList.add('hidden'); return; }
+  dd.innerHTML = results.map(p =>
+    `<div class="compare-drop-item" onclick="addToCompare('${p.name.replace(/'/g,"\\'")}')">
+      ${p.name} — ₹${parseInt(p.price.replace(/\D/g,'').toLocaleString())}/mo · ${p.gender}
+    </div>`
+  ).join('');
+  dd.classList.remove('hidden');
+}
+
+function addToCompare(name) {
+  if (compareList.length >= 3) { alert('Maximum 3 PGs can be compared at once.'); return; }
+  const pg = pgData.find(p => p.name === name);
+  if (!pg || compareList.find(c => c.name === name)) return;
+  compareList.push(pg);
+  document.getElementById('compareSearch').value = '';
+  document.getElementById('compareDropdown').classList.add('hidden');
+  renderCompare();
+}
+
+function removeFromCompare(name) {
+  compareList = compareList.filter(p => p.name !== name);
+  renderCompare();
+}
+
+function renderCompare() {
+  const pillsEl = document.getElementById('compareSelected');
+  const tableEl = document.getElementById('compareTable');
+
+  pillsEl.innerHTML = compareList.map(pg =>
+    `<div class="compare-pill">${pg.name}
+      <button onclick="removeFromCompare('${pg.name.replace(/'/g,"\\'")}')">×</button>
+    </div>`
+  ).join('');
+
+  if (!compareList.length) {
+    tableEl.innerHTML = '<div class="compare-empty">🔍<br>Search and add PGs above to compare them side by side.</div>';
+    return;
+  }
+
+  const fields = [
+    { label: 'PG Name', key: 'name', bold: true },
+    { label: 'City', key: 'city' },
+    { label: 'Monthly Rent', key: 'price' },
+    { label: 'For', key: 'gender' },
+    { label: 'Amenities', key: 'amenities' },
+    { label: 'Contact', key: 'contact' },
+    { label: 'Rating', key: '_rating' },
+  ];
+
+  const prices = compareList.map(p => parseInt(p.price.replace(/\D/g, '')));
+  const minPrice = Math.min(...prices);
+  const ratings = compareList.map(p => avgRating(p.name));
+  const maxRating = Math.max(...ratings);
+
+  let html = `<table class="compare-table"><thead><tr><th>Feature</th>`;
+  compareList.forEach(pg => { html += `<th>${pg.name}</th>`; });
+  html += `</tr></thead><tbody>`;
+
+  fields.forEach(f => {
+    html += `<tr><td style="font-weight:600;font-size:13px;color:var(--muted)">${f.label}</td>`;
+    compareList.forEach((pg, i) => {
+      let val = '';
+      if (f.key === '_rating') {
+        const r = avgRating(pg.name);
+        val = r > 0 ? `★ ${r.toFixed(1)}` : 'No ratings';
+        const isBest = r === maxRating && r > 0;
+        html += `<td class="${isBest ? 'best-cell' : ''}">${val}</td>`;
+      } else {
+        val = pg[f.key] || '—';
+        const isBestPrice = f.key === 'price' && parseInt(pg.price.replace(/\D/g,'')) === minPrice;
+        html += `<td class="${f.bold ? 'pg-name-cell' : ''} ${isBestPrice ? 'best-cell' : ''}">${val}</td>`;
+      }
+    });
+    html += `</tr>`;
+  });
+
+  html += `<tr><td style="font-weight:600;font-size:13px;color:var(--muted)">Action</td>`;
+  compareList.forEach(pg => {
+    html += `<td><button class="bcall" style="width:100%;font-size:12px;padding:7px" onclick="callPG('${pg.contact}')">📞 Call</button></td>`;
+  });
+  html += `</tr></tbody></table>`;
+  tableEl.innerHTML = html;
+}
+
+// =====================================================
+//  BUDGET PLANNER
+// =====================================================
+let budgetCity = 'Bhopal';
+
+const cityAvgCost = {
+  Bhopal:  { pg: 6000, food: 3000, transport: 1500, internet: 400, entertain: 1000, misc: 800 },
+  Delhi:   { pg: 9000, food: 4500, transport: 2500, internet: 500, entertain: 2000, misc: 1500 },
+  Mumbai:  { pg: 11000, food: 5000, transport: 2000, internet: 500, entertain: 2500, misc: 1500 },
+  Pune:    { pg: 8000, food: 4000, transport: 2000, internet: 400, entertain: 1500, misc: 1000 },
+  Patna:   { pg: 5500, food: 2500, transport: 1200, internet: 350, entertain: 800, misc: 600 },
+};
+
+function setBudgetCity(city, btn) {
+  budgetCity = city;
+  document.querySelectorAll('.cbs').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('budgetCityTag').textContent = '📍 ' + city;
+  const avg = cityAvgCost[city];
+  document.getElementById('bPG').value       = avg.pg;
+  document.getElementById('bFood').value     = avg.food;
+  document.getElementById('bTransport').value = avg.transport;
+  document.getElementById('bInternet').value = avg.internet;
+  document.getElementById('bEntertain').value = avg.entertain;
+  document.getElementById('bMisc').value     = avg.misc;
+  calcBudget();
+}
+
+function calcBudget() {
+  const pg        = parseInt(document.getElementById('bPG').value) || 0;
+  const food      = parseInt(document.getElementById('bFood').value) || 0;
+  const transport = parseInt(document.getElementById('bTransport').value) || 0;
+  const internet  = parseInt(document.getElementById('bInternet').value) || 0;
+  const entertain = parseInt(document.getElementById('bEntertain').value) || 0;
+  const misc      = parseInt(document.getElementById('bMisc').value) || 0;
+  const income    = parseInt(document.getElementById('budgetIncome').value) || 0;
+
+  document.getElementById('bPGVal').textContent        = '₹' + pg.toLocaleString();
+  document.getElementById('bFoodVal').textContent      = '₹' + food.toLocaleString();
+  document.getElementById('bTransportVal').textContent = '₹' + transport.toLocaleString();
+  document.getElementById('bInternetVal').textContent  = '₹' + internet.toLocaleString();
+  document.getElementById('bEntertainVal').textContent = '₹' + entertain.toLocaleString();
+  document.getElementById('bMiscVal').textContent      = '₹' + misc.toLocaleString();
+
+  const total = pg + food + transport + internet + entertain + misc;
+  const savings = income - total;
+
+  const rows = [
+    { icon: '🏠', label: 'PG / Rent', val: pg },
+    { icon: '🍽️', label: 'Food & Meals', val: food },
+    { icon: '🚌', label: 'Transport', val: transport },
+    { icon: '📱', label: 'Internet / Mobile', val: internet },
+    { icon: '🎬', label: 'Entertainment', val: entertain },
+    { icon: '🛍️', label: 'Miscellaneous', val: misc },
+  ];
+
+  document.getElementById('budgetBreakdown').innerHTML = rows.map(r =>
+    `<div class="budget-row">
+      <span class="budget-row-label">${r.icon} ${r.label}</span>
+      <span class="budget-row-val">₹${r.val.toLocaleString()}</span>
+    </div>`
+  ).join('');
+
+  document.getElementById('budgetTotal').textContent = '₹' + total.toLocaleString();
+
+  const savEl = document.getElementById('budgetSavings');
+  if (income > 0) {
+    const cls = savings >= 0 ? 'savings-positive' : 'savings-negative';
+    const msg = savings >= 0
+      ? `✅ You save ₹${savings.toLocaleString()} per month`
+      : `⚠️ Budget shortfall of ₹${Math.abs(savings).toLocaleString()}`;
+    savEl.className = 'budget-savings-row ' + cls;
+    savEl.textContent = msg;
+  } else {
+    savEl.className = 'budget-savings-row';
+    savEl.textContent = '';
+  }
+
+  const avg = cityAvgCost[budgetCity];
+  const avgTotal = Object.values(avg).reduce((a,b) => a + b, 0);
+  const tipEl = document.getElementById('budgetTip');
+  if (total > avgTotal * 1.2) tipEl.textContent = `💡 Tip: Average monthly cost in ${budgetCity} is ₹${avgTotal.toLocaleString()}. You're spending ${Math.round((total/avgTotal-1)*100)}% more than average.`;
+  else if (total < avgTotal * 0.8) tipEl.textContent = `✅ Great! Your budget is below the ${budgetCity} city average of ₹${avgTotal.toLocaleString()}.`;
+  else tipEl.textContent = `📊 Your budget is close to the ${budgetCity} city average of ₹${avgTotal.toLocaleString()}/month.`;
+
+  const avgCard = document.getElementById('budgetAvgCard');
+  avgCard.innerHTML = `
+    <div class="budget-card-title">City Average Costs — ${budgetCity}</div>
+    ${Object.entries(avg).map(([k,v]) => {
+      const labels = {pg:'🏠 PG/Rent',food:'🍽️ Food',transport:'🚌 Transport',internet:'📱 Internet',entertain:'🎬 Entertainment',misc:'🛍️ Misc'};
+      return `<div class="avg-row"><span>${labels[k]||k}</span><span style="font-weight:600">₹${v.toLocaleString()}</span></div>`;
+    }).join('')}
+    <div class="avg-row" style="border-top:2px solid var(--border);padding-top:10px;margin-top:4px"><span style="font-weight:700">Total Average</span><span style="font-weight:700;color:var(--brand)">₹${Object.values(avg).reduce((a,b)=>a+b,0).toLocaleString()}</span></div>`;
+}
+
+// Init budget sliders
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const avg = cityAvgCost['Bhopal'];
+    if (document.getElementById('bPG')) {
+      document.getElementById('bPG').value       = avg.pg;
+      document.getElementById('bFood').value     = avg.food;
+      document.getElementById('bTransport').value = avg.transport;
+      document.getElementById('bInternet').value = avg.internet;
+      document.getElementById('bEntertain').value = avg.entertain;
+      document.getElementById('bMisc').value     = avg.misc;
+      calcBudget();
+    }
+  }, 2000);
+});
+
+// =====================================================
+//  CHECKLIST
+// =====================================================
+const checklistData = [
+  {
+    category: '🚉 Arriving at the Station',
+    items: [
+      { id: 'c1', text: 'Exit the platform safely', sub: 'Follow exit boards — ask RPF if confused' },
+      { id: 'c2', text: 'Collect all luggage', sub: 'Double-check overhead racks and under your seat' },
+      { id: 'c3', text: 'Use prepaid auto/cab booth', sub: 'Fixed rates, no bargaining — safest option' },
+      { id: 'c4', text: 'Note vehicle number before boarding', sub: 'Share with family/friends for safety' },
+    ]
+  },
+  {
+    category: '📱 First Things to Do',
+    items: [
+      { id: 'c5', text: 'Buy/activate a local SIM card', sub: 'Carry Aadhaar for new SIM. Jio/Airtel recommended.' },
+      { id: 'c6', text: 'Withdraw some cash from ATM', sub: 'Keep ₹2000–3000 cash for initial expenses' },
+      { id: 'c7', text: 'Save emergency numbers', sub: 'Police: 100, Ambulance: 108, Railway: 139' },
+      { id: 'c8', text: 'Install Ola/Uber app', sub: 'For safe and transparent cab bookings' },
+    ]
+  },
+  {
+    category: '🏠 Finding a Place to Stay',
+    items: [
+      { id: 'c9', text: 'Search PGs on SheherSaathi', sub: 'Filter by city, budget, and gender preference' },
+      { id: 'c10', text: 'Visit PG before paying advance', sub: 'Check room, bathroom, kitchen, and security' },
+      { id: 'c11', text: 'Read rental agreement carefully', sub: 'Check lock-in period, notice period, and charges' },
+      { id: 'c12', text: 'Click photos of the room condition', sub: 'Useful for getting deposit back later' },
+    ]
+  },
+  {
+    category: '🏙️ Settling in the City',
+    items: [
+      { id: 'c13', text: 'Learn local transport routes', sub: 'Metro, buses, auto routes near your area' },
+      { id: 'c14', text: 'Find nearest grocery store', sub: 'Also check Blinkit/Zepto/Swiggy for delivery' },
+      { id: 'c15', text: 'Locate nearest hospital/clinic', sub: 'Important for any medical emergency' },
+      { id: 'c16', text: 'Open a bank account or link UPI', sub: 'Makes transactions much easier' },
+      { id: 'c17', text: 'Connect with local community', sub: 'Join college WhatsApp groups, local Facebook groups' },
+      { id: 'c18', text: 'Update your address with family', sub: 'Share PG address with at least 2 family members' },
+    ]
+  }
+];
+
+function renderChecklist() {
+  const done = JSON.parse(localStorage.getItem('ss_checklist') || '[]');
+  const total = checklistData.reduce((s, c) => s + c.items.length, 0);
+  const completed = done.length;
+
+  const fill = document.getElementById('checkProgressFill');
+  const text = document.getElementById('checkProgressText');
+  if (fill) fill.style.width = (total ? (completed/total*100) : 0) + '%';
+  if (text) text.textContent = `${completed} / ${total} completed`;
+
+  const wrap = document.getElementById('checklistItems');
+  if (!wrap) return;
+
+  wrap.innerHTML = checklistData.map(cat => `
+    <div class="checklist-category">
+      <div class="checklist-cat-header">${cat.category}</div>
+      ${cat.items.map(item => `
+        <div class="checklist-item ${done.includes(item.id) ? 'done' : ''}" onclick="toggleCheck('${item.id}')">
+          <div class="ci-check">${done.includes(item.id) ? '✓' : ''}</div>
+          <div class="ci-body">
+            <div class="ci-text">${item.text}</div>
+            <div class="ci-sub">${item.sub}</div>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+
+  if (completed === total && total > 0) {
+    wrap.innerHTML += `<div class="checklist-celebration">🎉<br><strong>All done! You're all set in your new city!</strong></div>`;
+    document.querySelector('.checklist-celebration').style.display = 'block';
+  }
+}
+
+function toggleCheck(id) {
+  let done = JSON.parse(localStorage.getItem('ss_checklist') || '[]');
+  if (done.includes(id)) done = done.filter(d => d !== id);
+  else { done.push(id); addNotif('Checklist item completed! ✅'); }
+  localStorage.setItem('ss_checklist', JSON.stringify(done));
+  renderChecklist();
+}
+
+function resetChecklist() {
+  if (!confirm('Reset all checklist items?')) return;
+  localStorage.removeItem('ss_checklist');
+  renderChecklist();
+}
+
+// =====================================================
+//  AI ASSISTANT
+// =====================================================
+const aiContext = `You are SheherSaathi AI Assistant, helping people who have moved to a new city in India. 
+You know about PGs, transport fares, city guides, emergency numbers, and local tips for Bhopal, Delhi, Mumbai, Pune, and Patna.
+Keep responses concise, friendly, and practical. Use emojis occasionally. Always suggest using SheherSaathi features.
+Current city the user is browsing: ${activeCity}.
+Available PG data: ${JSON.stringify(pgData?.slice(0,5) || [])}.`;
+
+let aiHistory = [];
+
+async function sendAIMessage() {
+  const input = document.getElementById('aiInput');
+  const msg = (input.value || '').trim();
+  if (!msg) return;
+  input.value = '';
+  askAI(msg);
+}
+
+async function askAI(msg) {
+  appendAIMessage(msg, 'user');
+  showAITyping();
+
+  aiHistory.push({ role: 'user', content: msg });
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are SheherSaathi AI Assistant, a helpful city guide for people moving to new cities in India. 
+You specialize in helping with PG accommodations, transport fares, city navigation, emergency contacts, and local tips for Bhopal, Delhi, Mumbai, Pune, and Patna.
+Be concise, friendly, and practical. Use emojis sparingly. Always give actionable advice.
+Current city context: ${activeCity}. Respond in the same language the user uses (Hindi or English).`,
+        messages: aiHistory.slice(-10),
+      })
+    });
+
+    const data = await response.json();
+    hideAITyping();
+
+    if (data.content && data.content[0]) {
+      const reply = data.content[0].text;
+      aiHistory.push({ role: 'assistant', content: reply });
+      appendAIMessage(reply, 'bot');
+    } else {
+      appendAIMessage('Sorry, I could not process that. Please try again.', 'bot');
+    }
+  } catch (err) {
+    hideAITyping();
+    // Fallback smart response when API unavailable
+    const fallback = getSmartFallback(msg);
+    aiHistory.push({ role: 'assistant', content: fallback });
+    appendAIMessage(fallback, 'bot');
+  }
+}
+
+function getSmartFallback(msg) {
+  const m = msg.toLowerCase();
+  const city = activeCity;
+
+  if (m.includes('pg') || m.includes('hostel') || m.includes('room')) {
+    const pgs = pgData.filter(p => p.city === city).slice(0, 3);
+    if (pgs.length) {
+      return `Here are some PGs in ${city} 🏠:\n\n${pgs.map(p => `• **${p.name}** — ${p.price}/mo (${p.gender}) | 📞 ${p.contact}`).join('\n')}\n\nUse the PG Finder tab for more options and filters!`;
+    }
+    return `I can help you find PGs in ${city}! Use the 🏠 PG Finder tab to search, filter by budget and gender, and contact owners directly.`;
+  }
+
+  if (m.includes('fare') || m.includes('auto') || m.includes('cab') || m.includes('transport')) {
+    return `For transport fares in ${city}, use the 🚗 Fare Calc tab! You can check auto, cab, bike taxi, and e-rickshaw fares from any station or bus stand to your destination. 💡 Tip: Always fix auto rate before boarding — meters are often not used.`;
+  }
+
+  if (m.includes('food') || m.includes('eat') || m.includes('restaurant')) {
+    const foods = { Bhopal: 'Poha-Jalebi (breakfast) and Bhutte ka Kees', Delhi: 'Paranthe Wali Gali and Karim\'s', Mumbai: 'Vada Pav and Pav Bhaji', Pune: 'Misal Pav and FC Road street food', Patna: 'Litti-Chokha and Satu Paratha' };
+    return `Must-try food in ${city}: 🍽️ **${foods[city] || 'local street food'}**! Use the 📍 Nearby tab to find restaurants and food stalls close to you.`;
+  }
+
+  if (m.includes('emergency') || m.includes('police') || m.includes('hospital') || m.includes('help')) {
+    return `Emergency numbers to save right now 🆘:\n\n• **Police**: 100\n• **Ambulance**: 108\n• **Fire**: 101\n• **All Emergency**: 112\n• **Railway**: 139\n\nCheck the 📞 Helplines tab for ${city}-specific numbers!`;
+  }
+
+  if (m.includes('cost') || m.includes('budget') || m.includes('expensive') || m.includes('money')) {
+    const avg = cityAvgCost[city];
+    if (avg) {
+      const total = Object.values(avg).reduce((a,b) => a+b, 0);
+      return `Average monthly cost in ${city} 💰:\n\n• PG/Rent: ₹${avg.pg.toLocaleString()}\n• Food: ₹${avg.food.toLocaleString()}\n• Transport: ₹${avg.transport.toLocaleString()}\n• Total: ~₹${total.toLocaleString()}/month\n\nUse the 💰 Budget Planner tab to customize your estimates!`;
+    }
+  }
+
+  return `Great question! I'm your SheherSaathi assistant for ${city}. I can help with:\n\n🏠 Finding PGs\n🚗 Transport fares\n🗺️ City navigation\n📞 Emergency contacts\n💰 Budget planning\n✅ New city checklist\n\nWhat specifically would you like to know?`;
+}
+
+function appendAIMessage(text, type) {
+  const el = document.getElementById('aiMessages');
+  if (!el) return;
+  const formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  const div = document.createElement('div');
+  div.className = `ai-msg ${type}`;
+  div.innerHTML = `
+    <div class="ai-avatar">${type === 'bot' ? '🤖' : '👤'}</div>
+    <div class="ai-bubble">${formatted}</div>`;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+
+function showAITyping() {
+  const el = document.getElementById('aiMessages');
+  if (!el) return;
+  const div = document.createElement('div');
+  div.className = 'ai-msg bot';
+  div.id = 'aiTyping';
+  div.innerHTML = `<div class="ai-avatar">🤖</div><div class="ai-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>`;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+
+function hideAITyping() {
+  const el = document.getElementById('aiTyping');
+  if (el) el.remove();
+}
+
+// =====================================================
+//  INIT NEW FEATURES
+// =====================================================
+const _origOnload = window.onload;
+window.onload = function() {
+  if (_origOnload) _origOnload();
+  setTimeout(() => {
+    renderChecklist();
+    renderCompare();
+    calcBudget();
+  }, 1800);
+};
+
+// Close compare dropdown on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.compare-search-bar')) {
+    const dd = document.getElementById('compareDropdown');
+    if (dd) dd.classList.add('hidden');
+  }
+});
